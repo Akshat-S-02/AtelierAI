@@ -27,10 +27,8 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .ntab.active{color:var(--gold);border-bottom-color:var(--gold)}
 .ntab:hover:not(.active){color:var(--cream2)}
 .nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
-.api-status{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);cursor:pointer;padding:4px 10px;border:0.5px solid #2A2620;border-radius:var(--r);transition:all 0.2s}
-.api-status:hover{border-color:var(--gold)}
+.api-status{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);padding:4px 10px;border:0.5px solid #2A2620;border-radius:var(--r)}
 .status-dot{width:6px;height:6px;border-radius:50%;background:#4A8A5C;animation:blink 2s ease infinite;flex-shrink:0}
-.status-dot.offline{background:var(--rose);animation:none}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 .nbtn{padding:6px 16px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border:0.5px solid var(--gold);color:var(--gold);background:transparent;border-radius:var(--r);cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;white-space:nowrap}
 .nbtn:hover{background:var(--gold);color:var(--ink)}
@@ -39,17 +37,6 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .page{display:none;flex:1;overflow-y:auto;overflow-x:hidden}
 .page.active{display:block}
 .pad{padding:24px 28px}
-
-/* ── API KEY BANNER ── */
-.api-banner{background:rgba(191,160,84,0.07);border:0.5px solid rgba(191,160,84,0.25);border-radius:var(--r3);padding:16px 20px;margin-bottom:22px;display:flex;align-items:center;gap:14px}
-.api-banner.hidden{display:none}
-.banner-icon{font-size:18px;flex-shrink:0}
-.banner-text{flex:1;font-size:12px;color:var(--cream2);line-height:1.6}
-.banner-text strong{color:var(--gold2)}
-.api-key-input{background:var(--ink3);border:0.5px solid #3A3630;border-radius:var(--r);padding:7px 12px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:12px;outline:none;width:280px;transition:border-color 0.2s}
-.api-key-input:focus{border-color:var(--gold)}
-.api-key-save{padding:7px 14px;background:var(--gold);border:none;border-radius:var(--r);color:var(--ink);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-family:'Outfit',sans-serif;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.api-key-save:hover{background:var(--gold2)}
 
 /* ── SECTION HEADERS ── */
 .section-hd{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--cream);margin-bottom:4px;font-weight:400}
@@ -70,7 +57,6 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .slot-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s}
 .upload-slot.filled:hover .slot-overlay{opacity:1}
 .slot-remove{font-size:10px;letter-spacing:1px;color:var(--cream);text-transform:uppercase;cursor:pointer;padding:6px 14px;border:0.5px solid rgba(255,255,255,0.3);border-radius:var(--r)}
-.slot-remove:hover{background:rgba(255,255,255,0.1)}
 .analyze-btn{width:100%;padding:13px;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:3px;text-transform:uppercase;background:var(--gold);border:none;color:var(--ink);border-radius:var(--r);cursor:pointer;transition:all 0.25s;font-weight:600}
 .analyze-btn:hover:not(:disabled){background:var(--gold2)}
 .analyze-btn:disabled{opacity:0.35;cursor:not-allowed}
@@ -147,7 +133,7 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .occbtn.active{border-color:var(--gold);color:var(--gold)}
 .occbtn:hover:not(.active){color:var(--cream2)}
 .ogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.ocard{background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r3);overflow:hidden;transition:all 0.2s;cursor:default}
+.ocard{background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r3);overflow:hidden;transition:all 0.2s}
 .ocard:hover{border-color:rgba(191,160,84,0.4);transform:translateY(-2px)}
 .ocard.worn{opacity:0.48}
 .ocard-colors{height:140px;display:flex}
@@ -158,7 +144,6 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .ocard-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
 .otag{font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px}
 .otag-gold{background:rgba(191,160,84,0.1);color:var(--gold2);border:0.5px solid rgba(191,160,84,0.22)}
-.otag-sage{background:rgba(92,138,110,0.1);color:#7ABC96;border:0.5px solid rgba(92,138,110,0.22)}
 .otag-rose{background:rgba(168,92,92,0.1);color:#C88080;border:0.5px solid rgba(168,92,92,0.22)}
 .match-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .match-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
@@ -172,7 +157,7 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 /* ── AI CHAT ── */
 .chat-layout{display:grid;grid-template-columns:1fr 320px;gap:20px;height:calc(100vh - 108px)}
 .chat-main{background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r3);display:flex;flex-direction:column;overflow:hidden;min-height:0}
-.quick-prompts{display:flex;gap:6px;padding:12px 16px 0;flex-wrap:wrap;border-bottom:0.5px solid #2A2620;padding-bottom:10px}
+.quick-prompts{display:flex;gap:6px;padding:12px 16px;flex-wrap:wrap;border-bottom:0.5px solid #2A2620}
 .qp{font-size:10px;padding:5px 10px;border:0.5px solid #2A2620;background:transparent;color:var(--muted);border-radius:var(--r);cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s}
 .qp:hover{border-color:var(--gold);color:var(--gold2)}
 .chat-messages{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;min-height:0}
@@ -190,8 +175,6 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .csend{padding:10px 22px;background:var(--gold);border:none;border-radius:var(--r2);color:var(--ink);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:500;cursor:pointer;transition:all 0.2s}
 .csend:hover{background:var(--gold2)}
 .csend:disabled{opacity:0.4;cursor:not-allowed}
-
-/* ── CHAT SIDE PANELS ── */
 .chat-side{display:flex;flex-direction:column;gap:14px;overflow-y:auto}
 .side-panel{background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r3);padding:18px;flex-shrink:0}
 .side-title{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
@@ -200,8 +183,6 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .pm-val{font-size:11px;color:var(--cream2)}
 .pm-val.gold{color:var(--gold2)}
 .pm-val.sage{color:#7ABC96}
-
-/* ── TYPING ── */
 .typing-dots{display:flex;gap:4px;padding:4px 0;align-items:center}
 .typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:tdot 1.2s ease infinite}
 .typing-dots span:nth-child(2){animation-delay:.2s}
@@ -224,8 +205,7 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .cday.today{border-color:var(--gold);color:var(--cream)}
 .cday-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);position:absolute;bottom:4px}
 .recent-list{display:flex;flex-direction:column;gap:10px}
-.ritem{display:flex;align-items:center;gap:14px;background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r2);padding:13px 16px;transition:border-color 0.2s}
-.ritem:hover{border-color:#3A3630}
+.ritem{display:flex;align-items:center;gap:14px;background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r2);padding:13px 16px}
 .rdate{font-size:11px;color:var(--muted);width:88px;flex-shrink:0}
 .rcolors{display:flex;gap:4px;flex-shrink:0}
 .rcol{width:28px;height:36px;border-radius:3px;border:0.5px solid rgba(255,255,255,0.05)}
@@ -247,7 +227,7 @@ select.finput option{background:var(--ink2)}
 .mactions{display:flex;gap:10px;margin-top:20px}
 .mbtn{flex:1;padding:10px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border-radius:var(--r);cursor:pointer;font-family:'Outfit',sans-serif;font-weight:500;transition:all 0.2s}
 .mbtn.cancel{background:transparent;border:0.5px solid #3A3630;color:var(--muted)}
-.mbtn.cancel:hover{color:var(--cream2);border-color:#5A5248}
+.mbtn.cancel:hover{color:var(--cream2)}
 .mbtn.confirm{background:var(--gold);border:0.5px solid var(--gold);color:var(--ink)}
 .mbtn.confirm:hover{background:var(--gold2)}
 .modal-upload-zone{border:1px dashed #3A3630;border-radius:var(--r2);height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;background:var(--ink3);position:relative;overflow:hidden;margin-bottom:16px}
@@ -255,20 +235,18 @@ select.finput option{background:var(--ink2)}
 .modal-preview{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
 
 /* ── TOAST ── */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--ink2);border:0.5px solid rgba(191,160,84,0.3);border-radius:var(--r2);padding:12px 18px;font-size:12px;color:var(--cream2);z-index:500;transform:translateY(60px);opacity:0;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);pointer-events:none;max-width:320px;line-height:1.5}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--ink2);border:0.5px solid rgba(191,160,84,0.3);border-left:2px solid var(--gold);border-radius:var(--r2);padding:12px 18px;font-size:12px;color:var(--cream2);z-index:500;transform:translateY(60px);opacity:0;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);pointer-events:none;max-width:320px;line-height:1.5}
 .toast.show{transform:translateY(0);opacity:1}
-.toast-gold{border-left:2px solid var(--gold)}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#3A3630;border-radius:2px}
-::-webkit-scrollbar-thumb:hover{background:#5A5248}
 </style>
 </head>
 <body>
-
 <div class="app">
+
 <!-- ── NAV ── -->
 <nav class="nav">
   <div class="logo">Atelier AI</div>
@@ -280,9 +258,9 @@ select.finput option{background:var(--ink2)}
     <button class="ntab" data-page="tracker" onclick="nav(this,'tracker')">Tracker</button>
   </div>
   <div class="nav-right">
-    <div class="api-status" onclick="showApiSetup()" title="Click to configure API key">
+    <div class="api-status">
       <div class="status-dot" id="status-dot"></div>
-      <span id="status-label">Set API Key</span>
+      <span id="status-label">AI Connected</span>
     </div>
     <button class="nbtn" onclick="openModal()">+ Add Item</button>
   </div>
@@ -296,42 +274,24 @@ select.finput option{background:var(--ink2)}
 <input type="file" id="fi-wardrobe" style="display:none" accept="image/*" onchange="handleWardrobeUpload(this)">
 <input type="file" id="fi-item-modal" style="display:none" accept="image/*" onchange="handleModalImg(this)">
 
-<!-- ════════════════════════════════════════════════════
-     ANALYSIS PAGE
-════════════════════════════════════════════════════ -->
+<!-- ════════════ ANALYSIS PAGE ════════════ -->
 <div class="page active pad" id="page-analysis">
-  <!-- API Key Banner -->
-  <div class="api-banner" id="api-banner">
-    <div class="banner-icon">🔑</div>
-    <div class="banner-text">
-      <strong>Enter your Anthropic API key</strong> to enable live AI analysis. Your key is stored only in your browser and never sent anywhere except Anthropic's servers.<br>
-      Get a free key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--gold2)">console.anthropic.com</a>
-    </div>
-    <input class="api-key-input" type="password" id="api-key-input" placeholder="sk-ant-api03-..." onkeydown="if(event.key==='Enter')saveApiKey()">
-    <button class="api-key-save" onclick="saveApiKey()">Save Key</button>
-  </div>
-
   <div class="analysis-hero">
-    <!-- Upload Panel -->
     <div class="upload-panel">
       <div class="panel-title">Upload Your Photos</div>
       <div class="panel-sub">Upload 2–4 photos from different angles. AI will analyse your body shape, face shape, skin tone, and undertone to generate your complete personal style profile.</div>
       <div class="upload-grid">
         <div class="upload-slot" id="slot-front" onclick="document.getElementById('fi-front').click()">
-          <div class="slot-icon">🧍</div>
-          <div class="slot-label">Front View</div>
+          <div class="slot-icon">🧍</div><div class="slot-label">Front View</div>
         </div>
         <div class="upload-slot" id="slot-side" onclick="document.getElementById('fi-side').click()">
-          <div class="slot-icon">🚶</div>
-          <div class="slot-label">Side View</div>
+          <div class="slot-icon">🚶</div><div class="slot-label">Side View</div>
         </div>
         <div class="upload-slot" id="slot-face" onclick="document.getElementById('fi-face').click()">
-          <div class="slot-icon">🙂</div>
-          <div class="slot-label">Face Close-Up</div>
+          <div class="slot-icon">🙂</div><div class="slot-label">Face Close-Up</div>
         </div>
         <div class="upload-slot" id="slot-full" onclick="document.getElementById('fi-full').click()">
-          <div class="slot-icon">📸</div>
-          <div class="slot-label">Full Body</div>
+          <div class="slot-icon">📸</div><div class="slot-label">Full Body</div>
         </div>
       </div>
       <button class="analyze-btn" id="analyze-btn" onclick="runAnalysis()" disabled>Analyse My Style Profile</button>
@@ -342,8 +302,6 @@ select.finput option{background:var(--ink2)}
         <div class="tip">Min. 1 photo</div>
       </div>
     </div>
-
-    <!-- Results Panel -->
     <div class="results-panel" id="results-panel">
       <div class="results-empty" id="results-empty">
         <div class="empty-icon">✦</div>
@@ -364,8 +322,6 @@ select.finput option{background:var(--ink2)}
       <div id="results-content" style="display:none"></div>
     </div>
   </div>
-
-  <!-- Profile Summary Cards -->
   <div id="profile-summary" style="display:none">
     <div class="section-hd" style="margin-top:8px">Your Complete Style Profile</div>
     <div class="section-sub">Generated from AI analysis · Personalised to your unique features</div>
@@ -373,12 +329,10 @@ select.finput option{background:var(--ink2)}
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════
-     WARDROBE PAGE
-════════════════════════════════════════════════════ -->
+<!-- ════════════ WARDROBE PAGE ════════════ -->
 <div class="page pad" id="page-wardrobe">
   <div class="section-hd">Your Wardrobe</div>
-  <div class="section-sub" id="wardrobe-sub">0 pieces · Upload clothing images to get AI match scores based on your profile</div>
+  <div class="section-sub" id="wardrobe-sub">0 pieces · Upload clothing images to get AI match scores</div>
   <div class="wfilters">
     <button class="wfbtn active" onclick="filterW(this,'all')">All</button>
     <button class="wfbtn" onclick="filterW(this,'tops')">Tops</button>
@@ -390,15 +344,12 @@ select.finput option{background:var(--ink2)}
   </div>
   <div class="wgrid" id="wardrobe-grid">
     <div class="add-wcard" onclick="document.getElementById('fi-wardrobe').click()">
-      <div class="add-icon">+</div>
-      <div class="add-label">Add Clothing</div>
+      <div class="add-icon">+</div><div class="add-label">Add Clothing</div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════
-     OUTFITS PAGE
-════════════════════════════════════════════════════ -->
+<!-- ════════════ OUTFITS PAGE ════════════ -->
 <div class="page pad" id="page-outfits">
   <div class="section-hd">Curated Outfit Combinations</div>
   <div class="section-sub">AI-matched to your body shape, skin tone, face shape & wardrobe</div>
@@ -414,9 +365,7 @@ select.finput option{background:var(--ink2)}
   <div class="ogrid" id="outfit-grid"></div>
 </div>
 
-<!-- ════════════════════════════════════════════════════
-     AI STYLIST PAGE
-════════════════════════════════════════════════════ -->
+<!-- ════════════ AI STYLIST PAGE ════════════ -->
 <div class="page pad" id="page-stylist">
   <div class="chat-layout">
     <div class="chat-main">
@@ -431,7 +380,7 @@ select.finput option{background:var(--ink2)}
       <div class="chat-messages" id="chat-messages">
         <div class="cmsg">
           <div class="cav ai">✦</div>
-          <div class="cbubble">Welcome to Atelier AI. I am your personal style consultant — powered by Claude Vision AI.<br><br>Start by completing your photo analysis so I can understand your skin tone, face shape, and body proportions. Then I can give you genuinely personalised recommendations rather than generic advice. What would you like to explore today?</div>
+          <div class="cbubble">Welcome to Atelier AI. I am your personal style consultant — powered by Claude Vision AI.<br><br>Start by completing your photo analysis so I can understand your skin tone, face shape, and body proportions. Then I can give you genuinely personalised recommendations. What would you like to explore today?</div>
         </div>
       </div>
       <div class="chat-input-area">
@@ -439,7 +388,6 @@ select.finput option{background:var(--ink2)}
         <button class="csend" id="chat-send" onclick="sendChat()">Send →</button>
       </div>
     </div>
-
     <div class="chat-side">
       <div class="side-panel">
         <div class="side-title">Your Style Profile</div>
@@ -453,9 +401,7 @@ select.finput option{background:var(--ink2)}
       </div>
       <div class="side-panel">
         <div class="side-title">Your Colour Palette</div>
-        <div id="side-palette">
-          <div style="font-size:11px;color:var(--muted);line-height:1.6">Complete photo analysis to reveal your personalised colour palette</div>
-        </div>
+        <div id="side-palette"><div style="font-size:11px;color:var(--muted);line-height:1.6">Complete photo analysis to reveal your personalised colour palette</div></div>
       </div>
       <div class="side-panel">
         <div class="side-title">Wardrobe Stats</div>
@@ -468,9 +414,7 @@ select.finput option{background:var(--ink2)}
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════
-     TRACKER PAGE
-════════════════════════════════════════════════════ -->
+<!-- ════════════ TRACKER PAGE ════════════ -->
 <div class="page pad" id="page-tracker">
   <div class="section-hd">Outfit Tracker</div>
   <div class="section-sub">April 2026 · Track every outfit you wear and plan what to wear next</div>
@@ -527,15 +471,23 @@ select.finput option{background:var(--ink2)}
   </div>
 </div>
 
-<!-- ── TOAST ── -->
-<div class="toast toast-gold" id="toast"></div>
+<div class="toast" id="toast"></div>
 
 <script>
-// ════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════
+// ── SINGLE API CALL FUNCTION (routes through /api/claude) ──
+async function callClaude(body) {
+  const res = await fetch('/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+  return data;
+}
+
+// ── STATE ──
 const S = {
-  apiKey: localStorage.getItem('atelier_api_key') || '',
   photos: { front:null, side:null, face:null, full:null },
   photoCount: 0,
   profile: JSON.parse(localStorage.getItem('atelier_profile') || 'null'),
@@ -565,65 +517,30 @@ const DEMO_RECENT = [
   { date:'Apr 10, Thu', colors:['#2C3E2D','#F2EDE4','#8B7355'], occ:'Casual', score:'★★★★☆' },
 ];
 
-// ════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════
+// ── INIT ──
 function init() {
-  updateApiStatus();
-  if(S.profile) {
-    showProfileResults(S.profile);
-    updateSideProfile(S.profile);
-  }
+  checkApiStatus();
+  if(S.profile) { showProfileResults(S.profile); updateSideProfile(S.profile); }
   renderWardrobe('all');
   renderOutfits('all');
   renderTracker();
   updateStats();
 }
 
-// ════════════════════════════════════════════
-// API KEY
-// ════════════════════════════════════════════
-function updateApiStatus() {
-  const dot = document.getElementById('status-dot');
-  const lbl = document.getElementById('status-label');
-  const banner = document.getElementById('api-banner');
-  if(S.apiKey) {
-    dot.classList.remove('offline');
-    lbl.textContent = 'AI Connected';
-    banner.classList.add('hidden');
-  } else {
-    dot.classList.add('offline');
-    lbl.textContent = 'Set API Key';
-    banner.classList.remove('hidden');
+async function checkApiStatus() {
+  try {
+    const res = await fetch('/api/claude', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1, messages:[{role:'user',content:'hi'}] }) });
+    const d = await res.json();
+    const ok = !d.error || d.error.type !== 'authentication_error';
+    document.getElementById('status-dot').style.background = ok ? '#4A8A5C' : '#A85C5C';
+    document.getElementById('status-label').textContent = ok ? 'AI Connected' : 'API Key Missing';
+  } catch(e) {
+    document.getElementById('status-dot').style.background = '#A85C5C';
+    document.getElementById('status-label').textContent = 'Server Error';
   }
 }
 
-function saveApiKey() {
-  const val = document.getElementById('api-key-input').value.trim();
-  if(!val) return;
-  S.apiKey = val;
-  localStorage.setItem('atelier_api_key', val);
-  document.getElementById('api-key-input').value = '';
-  updateApiStatus();
-  showToast('API key saved. AI features are now active.');
-}
-
-function showApiSetup() {
-  if(S.apiKey) {
-    if(confirm('Remove current API key?')) {
-      S.apiKey = '';
-      localStorage.removeItem('atelier_api_key');
-      updateApiStatus();
-    }
-  } else {
-    nav(document.querySelector('[data-page="analysis"]'), 'analysis');
-    document.getElementById('api-key-input').focus();
-  }
-}
-
-// ════════════════════════════════════════════
-// NAV
-// ════════════════════════════════════════════
+// ── NAV ──
 function nav(btn, id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
@@ -633,20 +550,14 @@ function nav(btn, id) {
   if(id==='outfits') renderOutfits('all');
 }
 
-// ════════════════════════════════════════════
-// PHOTO SLOTS
-// ════════════════════════════════════════════
+// ── PHOTO SLOTS ──
 function handleSlot(input, slotId) {
   const file = input.files[0]; if(!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     S.photos[slotId] = e.target.result;
     const slot = document.getElementById('slot-'+slotId);
-    slot.innerHTML = `
-      <img class="slot-img" src="${e.target.result}">
-      <div class="slot-overlay">
-        <div class="slot-remove" onclick="removeSlot('${slotId}',event)">Remove</div>
-      </div>`;
+    slot.innerHTML = `<img class="slot-img" src="${e.target.result}"><div class="slot-overlay"><div class="slot-remove" onclick="removeSlot('${slotId}',event)">Remove</div></div>`;
     slot.classList.add('filled');
     S.photoCount = Object.values(S.photos).filter(Boolean).length;
     document.getElementById('analyze-btn').disabled = false;
@@ -658,8 +569,8 @@ function handleSlot(input, slotId) {
 function removeSlot(id, e) {
   e.stopPropagation();
   S.photos[id] = null;
-  const icons = {front:'🧍',side:'🚶',face:'🙂',full:'📸'};
-  const labels = {front:'Front View',side:'Side View',face:'Face Close-Up',full:'Full Body'};
+  const icons={front:'🧍',side:'🚶',face:'🙂',full:'📸'};
+  const labels={front:'Front View',side:'Side View',face:'Face Close-Up',full:'Full Body'};
   const slot = document.getElementById('slot-'+id);
   slot.innerHTML = `<div class="slot-icon">${icons[id]}</div><div class="slot-label">${labels[id]}</div>`;
   slot.classList.remove('filled');
@@ -668,11 +579,8 @@ function removeSlot(id, e) {
   if(!S.photoCount) document.getElementById('analyze-btn').disabled = true;
 }
 
-// ════════════════════════════════════════════
-// ANALYSIS
-// ════════════════════════════════════════════
+// ── ANALYSIS ──
 async function runAnalysis() {
-  if(!S.apiKey) { showToast('Please enter your Anthropic API key first.'); return; }
   const photos = Object.values(S.photos).filter(Boolean);
   if(!photos.length) return;
 
@@ -684,8 +592,8 @@ async function runAnalysis() {
   const steps = ['ss1','ss2','ss3','ss4','ss5','ss6'];
   let si = 0;
   const timer = setInterval(() => {
-    if(si>0) { const prev = document.getElementById(steps[si-1]); if(prev) prev.classList.replace('active','done'); }
-    if(si<steps.length) { const cur = document.getElementById(steps[si]); if(cur) cur.classList.add('active'); }
+    if(si>0){ const p=document.getElementById(steps[si-1]); if(p){ p.classList.remove('active'); p.classList.add('done'); } }
+    if(si<steps.length){ const c=document.getElementById(steps[si]); if(c) c.classList.add('active'); }
     si++;
     if(si>steps.length) clearInterval(timer);
   }, 1000);
@@ -695,64 +603,28 @@ async function runAnalysis() {
     const mt = b64.split(';')[0].split(':')[1] || 'image/jpeg';
     content.push({ type:'image', source:{ type:'base64', media_type:mt, data:b64.split(',')[1] } });
   });
-  content.push({ type:'text', text:`You are a world-class fashion stylist, colour analyst, and body shape expert. Carefully analyse ALL provided photos and return ONLY a valid JSON object (no markdown fences, no explanation text whatsoever) with this exact structure:
-{
-  "skinTone": "descriptive name e.g. Warm Medium Brown",
-  "undertone": "Warm or Cool or Neutral",
-  "faceShape": "Oval or Round or Square or Heart or Diamond or Oblong or Rectangle",
-  "bodyShape": "Hourglass or Pear or Apple or Rectangle or Inverted Triangle",
-  "facialFeatures": "2 sentence description of key facial features",
-  "bodyProportions": "2 sentence description of body proportions observed",
-  "skinHex": "#hexcode approximating skin tone",
-  "bestColors": [
-    {"name":"colour name","hex":"#hex","reason":"specific reason for this skin tone"},
-    {"name":"colour name","hex":"#hex","reason":"specific reason"},
-    {"name":"colour name","hex":"#hex","reason":"specific reason"},
-    {"name":"colour name","hex":"#hex","reason":"specific reason"},
-    {"name":"colour name","hex":"#hex","reason":"specific reason"},
-    {"name":"colour name","hex":"#hex","reason":"specific reason"}
-  ],
-  "avoidColors": [
-    {"name":"colour name","hex":"#hex","reason":"why to avoid for this person"},
-    {"name":"colour name","hex":"#hex","reason":"why to avoid"},
-    {"name":"colour name","hex":"#hex","reason":"why to avoid"}
-  ],
-  "bodyStyleTips": ["specific tip 1 for this body shape","tip 2","tip 3","tip 4"],
-  "faceStyleTips": ["specific tip 1 for this face shape","tip 2","tip 3"],
-  "bestFits": ["silhouette/fit recommendation 1","recommendation 2","recommendation 3","recommendation 4"],
-  "patternsTextures": "specific patterns and textures that work for this person",
-  "necklines": "specific necklines and collar styles for this face and body combination",
-  "seasonalPalette": "Spring/Summer/Autumn/Winter (colour season analysis)",
-  "confidence": 0-100
-}` });
+  content.push({ type:'text', text:`You are a world-class fashion stylist, colour analyst, and body shape expert. Carefully analyse ALL provided photos. Return ONLY a valid JSON object, no markdown fences, no explanation:
+{"skinTone":"descriptive name","undertone":"Warm or Cool or Neutral","faceShape":"Oval or Round or Square or Heart or Diamond or Oblong or Rectangle","bodyShape":"Hourglass or Pear or Apple or Rectangle or Inverted Triangle","facialFeatures":"2 sentence description","bodyProportions":"2 sentence description","skinHex":"#hex","bestColors":[{"name":"name","hex":"#hex","reason":"specific reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"avoidColors":[{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"bodyStyleTips":["tip1","tip2","tip3","tip4"],"faceStyleTips":["tip1","tip2","tip3"],"bestFits":["fit1","fit2","fit3","fit4"],"patternsTextures":"description","necklines":"description","seasonalPalette":"Spring or Summer or Autumn or Winter","confidence":0}` });
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json', 'x-api-key':S.apiKey, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1800, messages:[{role:'user',content}] })
-    });
-    const data = await res.json();
+    const data = await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:1800, messages:[{role:'user',content}] });
     clearInterval(timer);
     steps.forEach(s=>{ const el=document.getElementById(s); if(el){ el.classList.remove('active'); el.classList.add('done'); } });
-
-    if(data.error) throw new Error(data.error.message);
     let raw = data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
     const profile = JSON.parse(raw);
     S.profile = profile;
     localStorage.setItem('atelier_profile', JSON.stringify(profile));
-
     setTimeout(() => {
       document.getElementById('analyzing-state').style.display = 'none';
       showProfileResults(profile);
       updateSideProfile(profile);
       renderOutfits('all');
       showToast('Profile analysis complete! Your personalised style profile is ready.');
-    }, 500);
+    }, 400);
   } catch(err) {
     clearInterval(timer);
     document.getElementById('analyzing-state').style.display = 'none';
-    document.getElementById('results-content').innerHTML = `<div style="padding:20px;color:var(--rose);font-size:13px;line-height:1.7">Analysis failed: ${err.message}<br><small style="color:var(--muted)">Check your API key and internet connection, then try again.</small></div>`;
+    document.getElementById('results-content').innerHTML = `<div style="padding:20px;color:var(--rose);font-size:13px;line-height:1.7">Analysis failed: ${err.message}<br><small style="color:var(--muted)">Check server configuration and try again.</small></div>`;
     document.getElementById('results-content').style.display = 'block';
     document.getElementById('analyze-btn').disabled = false;
   }
@@ -765,7 +637,7 @@ function showProfileResults(p) {
     <div class="result-section">
       <div class="rs-label">Skin Analysis</div>
       <div class="rs-value">${p.skinTone}</div>
-      <div class="rs-desc">Undertone: <strong style="color:var(--gold2)">${p.undertone}</strong>${p.seasonalPalette ? ` · Colour Season: <strong style="color:var(--gold2)">${p.seasonalPalette}</strong>` : ''}</div>
+      <div class="rs-desc">Undertone: <strong style="color:var(--gold2)">${p.undertone}</strong>${p.seasonalPalette?` · Season: <strong style="color:var(--gold2)">${p.seasonalPalette}</strong>`:''}</div>
       <div style="display:flex;align-items:center;gap:10px;margin-top:10px">
         <div style="width:32px;height:32px;border-radius:50%;background:${p.skinHex};border:1.5px solid rgba(255,255,255,0.1)"></div>
         <div style="font-size:11px;color:var(--muted)">Approximate skin tone</div>
@@ -783,38 +655,29 @@ function showProfileResults(p) {
     </div>
     <div class="result-section">
       <div class="rs-label">Your Best Colours</div>
-      <div class="palette-display">
-        ${(p.bestColors||[]).map(c=>`<div class="pal-chip"><div class="pal-swatch" style="background:${c.hex}" title="${c.reason}"></div><div class="pal-name">${c.name}</div></div>`).join('')}
-      </div>
+      <div class="palette-display">${(p.bestColors||[]).map(c=>`<div class="pal-chip"><div class="pal-swatch" style="background:${c.hex}" title="${c.reason}"></div><div class="pal-name">${c.name}</div></div>`).join('')}</div>
     </div>
     <div class="result-section">
       <div class="rs-label">Colours to Avoid</div>
-      <div class="avoid-chips">
-        ${(p.avoidColors||[]).map(c=>`<div class="avoid-chip"><div class="avoid-dot" style="background:${c.hex}"></div><div class="avoid-label">${c.name}</div></div>`).join('')}
-      </div>
+      <div class="avoid-chips">${(p.avoidColors||[]).map(c=>`<div class="avoid-chip"><div class="avoid-dot" style="background:${c.hex}"></div><div class="avoid-label">${c.name}</div></div>`).join('')}</div>
     </div>
     <div class="result-section">
-      <div class="rs-label">Best Necklines & Patterns</div>
+      <div class="rs-label">Necklines & Patterns</div>
       <div class="rs-desc" style="margin-bottom:6px">${p.necklines||'—'}</div>
       <div class="rs-desc">${p.patternsTextures||'—'}</div>
     </div>
     <div class="result-section">
-      <div class="rs-label">Analysis Confidence · ${S.photoCount} photo${S.photoCount>1?'s':''}</div>
+      <div class="rs-label">Confidence · ${S.photoCount} photo${S.photoCount>1?'s':''}</div>
       <div style="font-size:12px;color:var(--muted2)">${p.confidence}%</div>
       <div class="score-bar"><div class="score-fill" style="width:0%" id="conf-fill"></div></div>
     </div>`;
   setTimeout(()=>{ const f=document.getElementById('conf-fill'); if(f) f.style.width=p.confidence+'%'; },100);
 
-  const cards = [
-    { label:'Best Fits & Silhouettes', items:p.bestFits },
-    { label:'Body Shape Style Tips', items:p.bodyStyleTips },
-    { label:'Face Shape Tips', items:p.faceStyleTips },
-  ];
-  document.getElementById('profile-cards').innerHTML = cards.map(c=>`
-    <div class="pscard">
-      <div class="psc-label">${c.label}</div>
-      ${(c.items||[]).map(i=>`<div class="psc-item">${i}</div>`).join('')}
-    </div>`).join('');
+  document.getElementById('profile-cards').innerHTML = [
+    {label:'Best Fits & Silhouettes',items:p.bestFits},
+    {label:'Body Shape Style Tips',items:p.bodyStyleTips},
+    {label:'Face Shape Tips',items:p.faceStyleTips},
+  ].map(c=>`<div class="pscard"><div class="psc-label">${c.label}</div>${(c.items||[]).map(i=>`<div class="psc-item">${i}</div>`).join('')}</div>`).join('');
   document.getElementById('profile-summary').style.display = 'block';
   document.getElementById('analyze-btn').disabled = false;
 }
@@ -826,13 +689,10 @@ function updateSideProfile(p) {
     <div class="pm-row" style="margin-top:5px"><span class="pm-key">Undertone</span><span class="pm-val">${p.undertone}</span></div>
     <div class="pm-row" style="margin-top:5px"><span class="pm-key">Face Shape</span><span class="pm-val">${p.faceShape}</span></div>
     <div class="pm-row" style="margin-top:5px"><span class="pm-key">Body Shape</span><span class="pm-val">${p.bodyShape}</span></div>`;
-  document.getElementById('side-palette').innerHTML = (p.bestColors||[]).map(c=>`
-    <div title="${c.name}: ${c.reason}" style="width:26px;height:26px;border-radius:3px;background:${c.hex};border:0.5px solid rgba(255,255,255,0.08);cursor:pointer;transition:transform 0.15s" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></div>`).join('');
+  document.getElementById('side-palette').innerHTML = (p.bestColors||[]).map(c=>`<div title="${c.name}: ${c.reason}" style="width:26px;height:26px;border-radius:3px;background:${c.hex};border:0.5px solid rgba(255,255,255,0.08);cursor:pointer;display:inline-block;margin:2px;transition:transform 0.15s" onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'"></div>`).join('');
 }
 
-// ════════════════════════════════════════════
-// WARDROBE
-// ════════════════════════════════════════════
+// ── WARDROBE ──
 function handleWardrobeUpload(inp) {
   const file = inp.files[0]; if(!file) return;
   const reader = new FileReader();
@@ -842,227 +702,130 @@ function handleWardrobeUpload(inp) {
 }
 
 async function analyzeClothingItem(b64, name, overrides={}) {
-  // Add placeholder card with spinner
   const tempId = 'temp-'+Date.now();
   const grid = document.getElementById('wardrobe-grid');
   const tempDiv = document.createElement('div');
-  tempDiv.className = 'wcard';
-  tempDiv.id = tempId;
-  tempDiv.innerHTML = `<div class="wcard-img" style="background:var(--ink3)"><div class="analyzing-item"><div class="analyzing-item-ring"></div></div></div><div class="wcard-info"><div class="wcard-name" style="color:var(--muted)">Analysing…</div><div class="wcard-meta">AI matching in progress</div></div>`;
+  tempDiv.className = 'wcard'; tempDiv.id = tempId;
+  tempDiv.innerHTML = `<div class="wcard-img" style="background:var(--ink3)"><div class="analyzing-item"><div class="analyzing-item-ring"></div></div></div><div class="wcard-info"><div class="wcard-name" style="color:var(--muted)">Analysing…</div><div class="wcard-meta">AI matching</div></div>`;
   grid.insertBefore(tempDiv, grid.firstChild.nextSibling);
 
   const profileCtx = S.profile ? `User: ${S.profile.skinTone} skin, ${S.profile.undertone} undertone, ${S.profile.bodyShape} body, ${S.profile.faceShape} face.` : '';
-
   let item;
-  if(S.apiKey && b64) {
+
+  if(b64) {
     const mt = b64.split(';')[0].split(':')[1]||'image/jpeg';
     const content = [
       { type:'image', source:{ type:'base64', media_type:mt, data:b64.split(',')[1] } },
-      { type:'text', text:`Analyse this clothing item. ${profileCtx} Return ONLY valid JSON (no markdown):
-{"name":"${name||'clothing item'}","category":"tops or bottoms or outerwear or shoes or accessories","color":"color name","colorHex":"#hex","occasions":["casual","business","formal","evening","date","ethnic"],"matchScore":0-100,"matchReason":"1 sentence why this score for this user","emoji":"single emoji","season":"all or summer or winter or transitional"}` }
+      { type:'text', text:`Analyse this clothing item. ${profileCtx} Return ONLY valid JSON (no markdown): {"name":"${name||'item'}","category":"tops or bottoms or outerwear or shoes or accessories","color":"color name","colorHex":"#hex","occasions":["casual","business","formal","evening","date","ethnic"],"matchScore":0-100,"matchReason":"1 sentence","emoji":"single emoji","season":"all or summer or winter or transitional"}` }
     ];
     try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json','x-api-key':S.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
-        body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:300, messages:[{role:'user',content}] })
-      });
-      const data = await res.json();
+      const data = await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:300, messages:[{role:'user',content}] });
       let raw = data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
       item = JSON.parse(raw);
     } catch(e) { item = null; }
   }
 
-  if(!item) {
-    item = { name:overrides.name||name||'New Item', category:overrides.cat||'tops', color:overrides.color||'Unknown', colorHex:'#888', occasions:['casual'], matchScore:70, matchReason:'Manual entry', emoji:'👔', season:'all' };
-  }
-
+  if(!item) item = { name:overrides.name||name||'New Item', category:overrides.cat||'tops', color:overrides.color||'Unknown', colorHex:'#888', occasions:['casual'], matchScore:70, matchReason:'Manual entry', emoji:'👔', season:'all' };
   Object.assign(item, { img:b64, worn:0, id:Date.now()+Math.random(), ...overrides });
   S.wardrobe.push(item);
   saveWardrobe();
   document.getElementById(tempId)?.remove();
   renderWardrobe('all');
   updateStats();
-  showToast(`"${item.name}" added · Match score: ${item.matchScore}%`);
+  showToast(`"${item.name}" added · Match: ${item.matchScore}%`);
 }
 
 function renderWardrobe(filter) {
   const grid = document.getElementById('wardrobe-grid');
-  const pending = grid.querySelectorAll('[id^="temp-"]');
-  let items = filter==='all' ? S.wardrobe : filter==='unworn' ? S.wardrobe.filter(i=>i.worn===0) : S.wardrobe.filter(i=>i.category===filter);
+  const pending = Array.from(grid.querySelectorAll('[id^="temp-"]'));
+  let items = filter==='all'?S.wardrobe:filter==='unworn'?S.wardrobe.filter(i=>i.worn===0):S.wardrobe.filter(i=>i.category===filter);
   grid.innerHTML = `<div class="add-wcard" onclick="document.getElementById('fi-wardrobe').click()"><div class="add-icon">+</div><div class="add-label">Add Clothing</div></div>`;
   pending.forEach(p=>grid.appendChild(p));
   items.forEach(item => {
-    const score = item.matchScore||70;
-    const barColor = score>=85?'#5C8A6E':score>=70?'#BFA054':'#A85C5C';
-    const div = document.createElement('div');
-    div.className = 'wcard';
-    div.innerHTML = `
-      <div class="wcard-img" style="background:${item.colorHex||'#888'}22">
-        ${item.img?`<img src="${item.img}" alt="${item.name}">`:`<span style="font-size:32px">${item.emoji||'👔'}</span>`}
-        ${item.worn>0?`<div class="worn-pill">Worn ${item.worn}×</div>`:''}
-      </div>
-      <div class="wcard-info">
-        <div class="wcard-name">${item.name}</div>
-        <div class="wcard-meta">${item.color||''} · ${item.category}</div>
-        <div class="ai-match-bar"><div class="ai-match-fill" style="width:${score}%;background:${barColor}"></div></div>
-        <div style="font-size:9px;color:var(--muted);margin-top:2px">AI Match: ${score}%</div>
-      </div>`;
-    div.title = item.matchReason||'';
+    const score=item.matchScore||70;
+    const bc=score>=85?'#5C8A6E':score>=70?'#BFA054':'#A85C5C';
+    const div=document.createElement('div');
+    div.className='wcard';
+    div.title=item.matchReason||'';
+    div.innerHTML=`<div class="wcard-img" style="background:${item.colorHex||'#888'}22">${item.img?`<img src="${item.img}" alt="${item.name}">`:`<span style="font-size:32px">${item.emoji||'👔'}</span>`}${item.worn>0?`<div class="worn-pill">Worn ${item.worn}×</div>`:''}</div><div class="wcard-info"><div class="wcard-name">${item.name}</div><div class="wcard-meta">${item.color||''} · ${item.category}</div><div class="ai-match-bar"><div class="ai-match-fill" style="width:${score}%;background:${bc}"></div></div><div style="font-size:9px;color:var(--muted);margin-top:2px">AI Match: ${score}%</div></div>`;
     grid.appendChild(div);
   });
-  document.getElementById('wardrobe-sub').textContent = `${S.wardrobe.length} pieces · ${S.wardrobe.filter(i=>i.worn===0).length} unworn · Upload photos for AI match scores`;
+  document.getElementById('wardrobe-sub').textContent = `${S.wardrobe.length} pieces · ${S.wardrobe.filter(i=>i.worn===0).length} unworn`;
 }
 
-function filterW(btn, f) {
-  document.querySelectorAll('.wfbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderWardrobe(f);
-}
+function filterW(btn,f){ document.querySelectorAll('.wfbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderWardrobe(f); }
+function saveWardrobe(){ try{ localStorage.setItem('atelier_wardrobe',JSON.stringify(S.wardrobe)); }catch(e){} }
 
-function saveWardrobe() {
-  try { localStorage.setItem('atelier_wardrobe', JSON.stringify(S.wardrobe)); } catch(e) {}
-}
-
-// ════════════════════════════════════════════
-// OUTFITS
-// ════════════════════════════════════════════
+// ── OUTFITS ──
 function buildWardrobeOutfits() {
-  const tops = S.wardrobe.filter(i=>i.category==='tops');
-  const bots = S.wardrobe.filter(i=>i.category==='bottoms');
-  const shoes = S.wardrobe.filter(i=>i.category==='shoes');
+  const tops=S.wardrobe.filter(i=>i.category==='tops');
+  const bots=S.wardrobe.filter(i=>i.category==='bottoms');
+  const shoes=S.wardrobe.filter(i=>i.category==='shoes');
   if(!tops.length||!bots.length) return null;
-  const combos = [];
+  const combos=[];
   tops.forEach(t=>bots.forEach(b=>{
-    const sh = shoes[Math.floor(Math.random()*shoes.length)];
-    combos.push({
-      name: `${t.name} + ${b.name}`,
-      occ: (t.occasions&&t.occasions[0])||'casual',
-      score: Math.round(((t.matchScore||70)+(b.matchScore||70))/2),
-      worn: false,
-      tags: [(t.occasions&&t.occasions[0])||'Casual'],
-      colors: [t.colorHex||'#888', b.colorHex||'#888', sh?sh.colorHex||'#888':'#8B6043'],
-      desc: `${t.name} · ${b.name}${sh?' · '+sh.name:''}`
-    });
+    const sh=shoes[Math.floor(Math.random()*shoes.length)];
+    combos.push({ name:`${t.name} + ${b.name}`, occ:(t.occasions&&t.occasions[0])||'casual', score:Math.round(((t.matchScore||70)+(b.matchScore||70))/2), worn:false, tags:[(t.occasions&&t.occasions[0])||'Casual'], colors:[t.colorHex||'#888',b.colorHex||'#888',sh?sh.colorHex||'#888':'#8B6043'], desc:`${t.name} · ${b.name}${sh?' · '+sh.name:''}` });
   }));
   return combos.sort((a,b)=>b.score-a.score).slice(0,16);
 }
 
 function renderOutfits(filter) {
-  const grid = document.getElementById('outfit-grid');
-  const src = (S.wardrobe.length>=4&&buildWardrobeOutfits()) || DEMO_OUTFITS;
-  const all = filter==='all'?src:src.filter(o=>o.occ===filter);
-  if(!all.length) { grid.innerHTML = `<div style="font-size:13px;color:var(--muted);padding:20px">No outfits found for this occasion. Add more wardrobe items or select a different filter.</div>`; return; }
-  grid.innerHTML = all.map((o,i)=>`
-    <div class="ocard ${o.worn||S.wornOutfits.has(i)?'worn':''}" id="ocard-${i}">
-      <div class="ocard-colors">${o.colors.map(c=>`<div class="color-bar" style="background:${c}"></div>`).join('')}</div>
-      <div class="ocard-body">
-        <div class="ocard-name">${o.name}</div>
-        <div class="ocard-desc">${o.desc||''}</div>
-        <div class="ocard-tags">
-          ${o.tags.map(t=>`<span class="otag otag-gold">${t}</span>`).join('')}
-          ${o.worn||S.wornOutfits.has(i)?'<span class="otag otag-rose">Worn</span>':''}
-        </div>
-        <div class="match-row">
-          <div class="match-label">AI Match</div>
-          <div class="match-pct">${o.score}%</div>
-        </div>
-        <div class="ocard-btns">
-          <button class="ocbtn" onclick="toggleWorn(${i})">Mark Worn</button>
-          <button class="ocbtn primary" onclick="askAboutOutfit('${o.name}','${o.desc||o.tags.join(', ')}')">Ask AI ↗</button>
-        </div>
-      </div>
-    </div>`).join('');
+  const grid=document.getElementById('outfit-grid');
+  const src=(S.wardrobe.length>=4&&buildWardrobeOutfits())||DEMO_OUTFITS;
+  const all=filter==='all'?src:src.filter(o=>o.occ===filter);
+  if(!all.length){ grid.innerHTML=`<div style="font-size:13px;color:var(--muted);padding:20px">No outfits for this occasion. Add more wardrobe items or select a different filter.</div>`; return; }
+  grid.innerHTML=all.map((o,i)=>`<div class="ocard ${S.wornOutfits.has(i)?'worn':''}" id="ocard-${i}"><div class="ocard-colors">${o.colors.map(c=>`<div class="color-bar" style="background:${c}"></div>`).join('')}</div><div class="ocard-body"><div class="ocard-name">${o.name}</div><div class="ocard-desc">${o.desc||''}</div><div class="ocard-tags">${o.tags.map(t=>`<span class="otag otag-gold">${t}</span>`).join('')}${S.wornOutfits.has(i)?'<span class="otag otag-rose">Worn</span>':''}</div><div class="match-row"><div class="match-label">AI Match</div><div class="match-pct">${o.score}%</div></div><div class="ocard-btns"><button class="ocbtn" onclick="toggleWorn(${i})">${S.wornOutfits.has(i)?'Unmark':'Mark Worn'}</button><button class="ocbtn primary" onclick="qsend('Tell me more about this outfit: ${o.name} — ${o.desc||o.tags.join(', ')}')">Ask AI ↗</button></div></div></div>`).join('');
 }
 
-function filterO(btn, f) {
-  document.querySelectorAll('.occbtn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderOutfits(f);
-}
+function filterO(btn,f){ document.querySelectorAll('.occbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderOutfits(f); }
+function toggleWorn(idx){ if(S.wornOutfits.has(idx)) S.wornOutfits.delete(idx); else S.wornOutfits.add(idx); renderOutfits(document.querySelector('.occbtn.active').textContent.toLowerCase()==='all'?'all':document.querySelector('.occbtn.active').textContent.toLowerCase()); document.getElementById('ts-worn').textContent=4+S.wornOutfits.size; updateStats(); }
 
-function toggleWorn(idx) {
-  if(S.wornOutfits.has(idx)) S.wornOutfits.delete(idx); else S.wornOutfits.add(idx);
-  const card = document.getElementById('ocard-'+idx);
-  if(!card) return;
-  const wasWorn = card.classList.contains('worn');
-  card.classList.toggle('worn');
-  const btn = card.querySelector('.ocbtn');
-  if(btn) btn.textContent = wasWorn ? 'Mark Worn' : 'Unmark';
-  document.getElementById('ts-worn').textContent = 4 + S.wornOutfits.size;
-  updateStats();
-}
-
-function askAboutOutfit(name, desc) {
-  qsend(`Tell me more about this outfit combination and why it works: "${name}" — ${desc}`);
-}
-
-// ════════════════════════════════════════════
-// AI CHAT
-// ════════════════════════════════════════════
+// ── AI CHAT ──
 async function sendChat() {
-  const input = document.getElementById('chat-in');
-  const msg = input.value.trim();
-  if(!msg) return;
-  if(!S.apiKey) { showToast('Please set your API key to use the AI stylist.'); return; }
-  input.value = '';
-  appendMsg('user', msg);
-  S.chatHistory.push({ role:'user', content:msg });
-  const sendBtn = document.getElementById('chat-send');
-  sendBtn.disabled = true;
-  const tid = 'typing-'+Date.now();
-  const container = document.getElementById('chat-messages');
-  const typingEl = document.createElement('div');
-  typingEl.className = 'cmsg'; typingEl.id = tid;
-  typingEl.innerHTML = `<div class="cav ai">✦</div><div class="cbubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
-  container.appendChild(typingEl);
-  container.scrollTop = container.scrollHeight;
+  const input=document.getElementById('chat-in');
+  const msg=input.value.trim(); if(!msg) return;
+  input.value='';
+  appendMsg('user',msg);
+  S.chatHistory.push({role:'user',content:msg});
+  const sendBtn=document.getElementById('chat-send');
+  sendBtn.disabled=true;
+  const tid='typing-'+Date.now();
+  const container=document.getElementById('chat-messages');
+  const el=document.createElement('div');
+  el.className='cmsg'; el.id=tid;
+  el.innerHTML=`<div class="cav ai">✦</div><div class="cbubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  container.appendChild(el);
+  container.scrollTop=container.scrollHeight;
 
-  const profileCtx = S.profile ? `
-ANALYSED PROFILE:
-- Skin Tone: ${S.profile.skinTone} | Undertone: ${S.profile.undertone} | Colour Season: ${S.profile.seasonalPalette||'unknown'}
-- Face Shape: ${S.profile.faceShape} | Body Shape: ${S.profile.bodyShape}
-- Best Colours: ${(S.profile.bestColors||[]).map(c=>c.name).join(', ')}
-- Avoid: ${(S.profile.avoidColors||[]).map(c=>c.name).join(', ')}
-- Best Fits: ${(S.profile.bestFits||[]).join('; ')}
-- Necklines: ${S.profile.necklines||'not analysed'}
-- Patterns: ${S.profile.patternsTextures||'not analysed'}` : 'No photo analysis completed yet — give general advice.';
-
-  const wardrobeCtx = S.wardrobe.length ?
-    `\nWARDROBE (${S.wardrobe.length} items): ${S.wardrobe.map(i=>`${i.name} (${i.color}, ${i.category}, match:${i.matchScore}%)`).join(' | ')}` : '\nNo wardrobe items added yet.';
-
-  const system = `You are a luxury fashion consultant and personal stylist at Atelier AI — one of the world's finest virtual styling services. You combine deep expertise in colour theory (seasonal colour analysis), body proportion styling, face shape dressing, and current fashion trends.\n\n${profileCtx}${wardrobeCtx}\n\nGuidelines:\n- Always reference the user's specific profile data when giving advice\n- Be warm, authoritative, and specific — not generic\n- Give actionable, concrete recommendations\n- When suggesting purchases, be specific about item descriptions\n- Format responses clearly but conversationally (2-4 paragraphs max)\n- Never give generic advice that ignores the profile data`;
+  const profileCtx=S.profile?`\nANALYSED PROFILE:\n- Skin Tone: ${S.profile.skinTone} | Undertone: ${S.profile.undertone} | Season: ${S.profile.seasonalPalette||'unknown'}\n- Face Shape: ${S.profile.faceShape} | Body Shape: ${S.profile.bodyShape}\n- Best Colours: ${(S.profile.bestColors||[]).map(c=>c.name).join(', ')}\n- Avoid: ${(S.profile.avoidColors||[]).map(c=>c.name).join(', ')}\n- Best Fits: ${(S.profile.bestFits||[]).join('; ')}\n- Necklines: ${S.profile.necklines||'—'}\n- Patterns: ${S.profile.patternsTextures||'—'}`:'No photo analysis completed yet.';
+  const wardrobeCtx=S.wardrobe.length?`\nWARDROBE (${S.wardrobe.length} items): ${S.wardrobe.map(i=>`${i.name}(${i.color},${i.category},${i.matchScore}%)`).join(' | ')}`:'No wardrobe items yet.';
+  const system=`You are a luxury fashion consultant at Atelier AI. Deep expertise in colour theory, body proportion styling, face shape dressing, and fashion trends.${profileCtx}${wardrobeCtx}\n\nAlways reference the user's specific profile. Be warm, authoritative, specific. Give actionable recommendations. 2-4 paragraphs max.`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json','x-api-key':S.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true' },
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:800, system, messages:S.chatHistory.slice(-10) })
-    });
-    const data = await res.json();
-    if(data.error) throw new Error(data.error.message);
-    const reply = data.content.map(b=>b.text||'').join('');
+    const data=await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:800, system, messages:S.chatHistory.slice(-10) });
+    const reply=data.content.map(b=>b.text||'').join('');
     document.getElementById(tid)?.remove();
-    appendMsg('ai', reply);
-    S.chatHistory.push({ role:'assistant', content:reply });
+    appendMsg('ai',reply);
+    S.chatHistory.push({role:'assistant',content:reply});
   } catch(err) {
     document.getElementById(tid)?.remove();
-    appendMsg('ai', `I'm having trouble connecting: ${err.message}. Please check your API key and try again.`);
+    appendMsg('ai',`Connection error: ${err.message}. Please try again.`);
   }
-  sendBtn.disabled = false;
+  sendBtn.disabled=false;
 }
 
-function appendMsg(role, text) {
-  const container = document.getElementById('chat-messages');
-  const div = document.createElement('div');
-  div.className = `cmsg ${role}`;
-  div.innerHTML = `<div class="cav ${role==='ai'?'ai':'user'}">${role==='ai'?'✦':'A'}</div><div class="cbubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--gold2)">$1</strong>')}</div>`;
+function appendMsg(role,text){
+  const container=document.getElementById('chat-messages');
+  const div=document.createElement('div');
+  div.className=`cmsg ${role}`;
+  div.innerHTML=`<div class="cav ${role==='ai'?'ai':'user'}">${role==='ai'?'✦':'A'}</div><div class="cbubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong style="color:var(--gold2)">$1</strong>')}</div>`;
   container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
+  container.scrollTop=container.scrollHeight;
 }
 
-function qsend(msg) {
-  document.getElementById('chat-in').value = msg;
+function qsend(msg){
+  document.getElementById('chat-in').value=msg;
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelector('[data-page="stylist"]').classList.add('active');
@@ -1070,92 +833,60 @@ function qsend(msg) {
   sendChat();
 }
 
-// ════════════════════════════════════════════
-// TRACKER
-// ════════════════════════════════════════════
-function renderTracker() {
+// ── TRACKER ──
+function renderTracker(){
   updateStats();
-  const grid = document.getElementById('cal-grid');
-  const wornDays = [1,3,5,7,8,10,12,13];
-  let html = '';
-  for(let d=1;d<=30;d++) {
-    const has = wornDays.includes(d) || (d<=13 && Math.random()>0.6);
-    html += `<div class="cday ${has?'has':''} ${d===13?'today':''}">${d}${has?'<div class="cday-dot"></div>':''}</div>`;
-  }
-  grid.innerHTML = html;
-  document.getElementById('recent-list').innerHTML = DEMO_RECENT.map(r=>`
-    <div class="ritem">
-      <div class="rdate">${r.date}</div>
-      <div class="rcolors">${r.colors.map(c=>`<div class="rcol" style="background:${c}"></div>`).join('')}</div>
-      <div class="rocc">${r.occ}</div>
-      <div class="rscore">${r.score}</div>
-    </div>`).join('');
+  const grid=document.getElementById('cal-grid');
+  const wornDays=[1,3,5,7,8,10,12,13];
+  let html='';
+  for(let d=1;d<=30;d++){ const has=wornDays.includes(d); html+=`<div class="cday ${has?'has':''} ${d===13?'today':''}">${d}${has?'<div class="cday-dot"></div>':''}</div>`; }
+  grid.innerHTML=html;
+  document.getElementById('recent-list').innerHTML=DEMO_RECENT.map(r=>`<div class="ritem"><div class="rdate">${r.date}</div><div class="rcolors">${r.colors.map(c=>`<div class="rcol" style="background:${c}"></div>`).join('')}</div><div class="rocc">${r.occ}</div><div class="rscore">${r.score}</div></div>`).join('');
 }
 
-function updateStats() {
-  const total = S.wardrobe.length;
-  const unworn = S.wardrobe.filter(i=>i.worn===0).length;
-  const combos = total>=2 ? S.wardrobe.filter(i=>i.category==='tops').length * S.wardrobe.filter(i=>i.category==='bottoms').length : 0;
-  const avg = total ? Math.round(S.wardrobe.reduce((a,i)=>a+(i.matchScore||70),0)/total) : 0;
-  document.getElementById('st-total').textContent = total;
-  document.getElementById('st-combos').textContent = combos;
-  document.getElementById('st-unworn').textContent = unworn;
-  document.getElementById('st-avg').textContent = avg ? avg+'%' : '—';
-  document.getElementById('ts-unworn').textContent = unworn;
-  document.getElementById('ts-combos').textContent = combos;
-  document.getElementById('ts-worn').textContent = 4 + S.wornOutfits.size;
+function updateStats(){
+  const total=S.wardrobe.length;
+  const unworn=S.wardrobe.filter(i=>i.worn===0).length;
+  const combos=total>=2?S.wardrobe.filter(i=>i.category==='tops').length*S.wardrobe.filter(i=>i.category==='bottoms').length:0;
+  const avg=total?Math.round(S.wardrobe.reduce((a,i)=>a+(i.matchScore||70),0)/total):0;
+  document.getElementById('st-total').textContent=total;
+  document.getElementById('st-combos').textContent=combos;
+  document.getElementById('st-unworn').textContent=unworn;
+  document.getElementById('st-avg').textContent=avg?avg+'%':'—';
+  document.getElementById('ts-unworn').textContent=unworn;
+  document.getElementById('ts-combos').textContent=combos;
+  document.getElementById('ts-worn').textContent=4+S.wornOutfits.size;
 }
 
-// ════════════════════════════════════════════
-// MODAL
-// ════════════════════════════════════════════
-function openModal() { document.getElementById('modal-bg').classList.add('open'); }
-function closeModal() {
+// ── MODAL ──
+function openModal(){ document.getElementById('modal-bg').classList.add('open'); }
+function closeModal(){
   document.getElementById('modal-bg').classList.remove('open');
-  S.modalImg = null;
-  document.getElementById('modal-preview-img').style.display = 'none';
-  document.getElementById('modal-upload-prompt').style.display = 'flex';
+  S.modalImg=null;
+  document.getElementById('modal-preview-img').style.display='none';
+  document.getElementById('modal-upload-prompt').style.display='flex';
   ['fi-name','fi-color','fi-occ','fi-brand'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
 }
-
-function handleModalImg(inp) {
-  const file = inp.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    S.modalImg = e.target.result;
-    document.getElementById('modal-preview-img').src = e.target.result;
-    document.getElementById('modal-preview-img').style.display = 'block';
-    document.getElementById('modal-upload-prompt').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
-  inp.value = '';
+function handleModalImg(inp){
+  const file=inp.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{ S.modalImg=e.target.result; document.getElementById('modal-preview-img').src=e.target.result; document.getElementById('modal-preview-img').style.display='block'; document.getElementById('modal-upload-prompt').style.display='none'; };
+  reader.readAsDataURL(file); inp.value='';
 }
-
-async function confirmAddItem() {
-  const name = document.getElementById('fi-name').value.trim() || 'New Item';
-  const cat = document.getElementById('fi-cat').value;
-  const color = document.getElementById('fi-color').value.trim();
-  const occ = document.getElementById('fi-occ').value.trim();
-  const img = S.modalImg;
+async function confirmAddItem(){
+  const name=document.getElementById('fi-name').value.trim()||'New Item';
+  const cat=document.getElementById('fi-cat').value;
+  const color=document.getElementById('fi-color').value.trim();
+  const occ=document.getElementById('fi-occ').value.trim();
+  const img=S.modalImg;
   closeModal();
-  await analyzeClothingItem(img, name, { name, cat, color:color||undefined, occasions:occ?occ.split(',').map(o=>o.trim().toLowerCase()):['casual'] });
+  await analyzeClothingItem(img,name,{name,cat,color:color||undefined,occasions:occ?occ.split(',').map(o=>o.trim().toLowerCase()):['casual']});
 }
 
-// ════════════════════════════════════════════
-// TOAST
-// ════════════════════════════════════════════
+// ── TOAST ──
 let toastTimer;
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>el.classList.remove('show'), 3500);
-}
+function showToast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),3500); }
 
-// ════════════════════════════════════════════
-// START
-// ════════════════════════════════════════════
 init();
 </script>
 </body>
