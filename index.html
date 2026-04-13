@@ -610,8 +610,10 @@ async function runAnalysis() {
     const data = await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:1800, messages:[{role:'user',content}] });
     clearInterval(timer);
     steps.forEach(s=>{ const el=document.getElementById(s); if(el){ el.classList.remove('active'); el.classList.add('done'); } });
-    let raw = data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
-    const profile = JSON.parse(raw);
+  let raw = data.content.map(b=>b.text||'').join('');
+const jsonMatch = raw.match(/\{[\s\S]*\}/);
+if(!jsonMatch) throw new Error('No JSON found in response');
+const profile = JSON.parse(jsonMatch[0]);
     S.profile = profile;
     localStorage.setItem('atelier_profile', JSON.stringify(profile));
     setTimeout(() => {
@@ -720,8 +722,10 @@ async function analyzeClothingItem(b64, name, overrides={}) {
     ];
     try {
       const data = await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:300, messages:[{role:'user',content}] });
-      let raw = data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
-      item = JSON.parse(raw);
+     let raw = data.content.map(b=>b.text||'').join('');
+const jsonMatch = raw.match(/\{[\s\S]*\}/);
+if(!jsonMatch) throw new Error('No JSON found');
+item = JSON.parse(jsonMatch[0]);
     } catch(e) { item = null; }
   }
 
