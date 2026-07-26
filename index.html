@@ -599,11 +599,16 @@ function init() {
 
 async function checkApiStatus() {
   try {
-    const res = await fetch('/api/claude', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1, messages:[{role:'user',content:'hi'}] }) });
+    const res = await fetch('/api/claude', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ model:'claude-sonnet-5', max_tokens:1, messages:[{role:'user',content:'hi'}] }) });
     const d = await res.json();
-    const ok = !d.error || d.error.type !== 'authentication_error';
+    const ok = !d.error;
     document.getElementById('status-dot').style.background = ok ? '#4A8A5C' : '#A85C5C';
-    document.getElementById('status-label').textContent = ok ? 'AI Connected' : 'API Key Missing';
+    let label = 'AI Connected';
+    if(!ok){
+      const t=d.error.type||'';
+      label = t==='authentication_error' ? 'API Key Missing' : t==='not_found_error' ? 'Model Unavailable' : 'API Error';
+    }
+    document.getElementById('status-label').textContent = label;
   } catch(e) {
     document.getElementById('status-dot').style.background = '#A85C5C';
     document.getElementById('status-label').textContent = 'Server Error';
@@ -678,7 +683,7 @@ async function runAnalysis() {
 {"skinTone":"descriptive name","undertone":"Warm or Cool or Neutral","faceShape":"Oval or Round or Square or Heart or Diamond or Oblong or Rectangle","bodyShape":"Hourglass or Pear or Apple or Rectangle or Inverted Triangle","facialFeatures":"2 sentence description","bodyProportions":"2 sentence description","skinHex":"#hex","bestColors":[{"name":"name","hex":"#hex","reason":"specific reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"avoidColors":[{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"bodyStyleTips":["tip1","tip2","tip3","tip4"],"faceStyleTips":["tip1","tip2","tip3"],"bestFits":["fit1","fit2","fit3","fit4"],"patternsTextures":"description","necklines":"description","seasonalPalette":"Spring or Summer or Autumn or Winter","confidence":0}` });
 
   try {
-    const data = await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:1800, messages:[{role:'user',content}] });
+    const data = await callClaude({ model:'claude-sonnet-5', max_tokens:1800, messages:[{role:'user',content}] });
     clearInterval(timer);
     steps.forEach(s=>{ const el=document.getElementById(s); if(el){ el.classList.remove('active'); el.classList.add('done'); } });
   let raw = data.content.map(b=>b.text||'').join('');
@@ -795,7 +800,7 @@ async function analyzeClothingItem(b64, name, overrides={}) {
       { type:'text', text:`Analyse this clothing item. ${profileCtx} Return ONLY valid JSON (no markdown): {"name":"${name||'item'}","category":"tops or bottoms or outerwear or shoes or accessories","color":"color name","colorHex":"#hex","occasions":["casual","business","formal","evening","date","ethnic"],"matchScore":0-100,"matchReason":"1 sentence","emoji":"single emoji","season":"all or summer or winter or transitional"}` }
     ];
     try {
-      const data = await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:300, messages:[{role:'user',content}] });
+      const data = await callClaude({ model:'claude-sonnet-5', max_tokens:300, messages:[{role:'user',content}] });
      let raw = data.content.map(b=>b.text||'').join('');
 const jsonMatch = raw.match(/\{[\s\S]*\}/);
 if(!jsonMatch) throw new Error('No JSON found');
@@ -863,7 +868,7 @@ async function generateAIOutfits() {
   const prompt=`You are a luxury fashion stylist building real outfit combinations from a client's ACTUAL wardrobe (not generic advice).\n\n${profileCtx}\n\nWARDROBE ITEMS (JSON): ${JSON.stringify(items)}\n\nCreate up to 10 genuinely well-considered outfit combinations. Each outfit MUST combine 2-4 real items from the wardrobe above by their exact "id" values — do not invent items. Prioritise combinations that make real colour-theory and occasion sense, and that flatter the client's profile where relevant. Only combine items that could plausibly be worn together for one occasion (don't mix ethnic wear with business separates, etc). If the wardrobe genuinely doesn't support a full outfit (e.g. no bottoms at all), return fewer, honest combinations rather than padding.\n\nReturn ONLY valid JSON, no markdown fences, no explanation:\n[{"name":"short evocative outfit name","occ":"casual|business|formal|evening|date|ethnic","itemIds":[id,id],"score":0-100,"tags":["tag1","tag2"],"desc":"1 sentence on the combo and why it works for this client"}]`;
 
   try {
-    const data=await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:2000, messages:[{role:'user',content:prompt}] });
+    const data=await callClaude({ model:'claude-sonnet-5', max_tokens:2000, messages:[{role:'user',content:prompt}] });
     let raw=data.content.map(b=>b.text||'').join('');
     const jsonMatch=raw.match(/\[[\s\S]*\]/);
     if(!jsonMatch) throw new Error('No JSON array found in response');
@@ -981,7 +986,7 @@ async function sendChat() {
   const system=`You are a luxury fashion consultant at Atelier AI. Deep expertise in colour theory, body proportion styling, face shape dressing, and fashion trends.${profileCtx}${wardrobeCtx}\n\nAlways reference the user's specific profile. Be warm, authoritative, specific. Give actionable recommendations. 2-4 paragraphs max.`;
 
   try {
-    const data=await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:800, system, messages:S.chatHistory.slice(-10) });
+    const data=await callClaude({ model:'claude-sonnet-5', max_tokens:800, system, messages:S.chatHistory.slice(-10) });
     const reply=data.content.map(b=>b.text||'').join('');
     document.getElementById(tid)?.remove();
     appendMsg('ai',reply);
