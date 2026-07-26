@@ -242,6 +242,50 @@ select.finput option{background:var(--ink2)}
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:#3A3630;border-radius:2px}
+
+/* ── WARDROBE CARD ACTIONS (edit/delete) ── */
+.wcard{position:relative}
+.wcard-actions{position:absolute;top:6px;left:6px;display:flex;gap:4px;opacity:0;transition:opacity 0.15s;z-index:2}
+.wcard:hover .wcard-actions{opacity:1}
+.wca-btn{width:22px;height:22px;border-radius:50%;background:rgba(10,9,8,0.75);border:0.5px solid rgba(255,255,255,0.2);color:var(--cream);font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;line-height:1}
+.wca-btn:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.gen-outfits-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.gen-btn{padding:8px 18px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;background:transparent;border:0.5px solid var(--gold);color:var(--gold);border-radius:var(--r);cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.gen-btn:hover:not(:disabled){background:var(--gold);color:var(--ink)}
+.gen-btn:disabled{opacity:0.4;cursor:not-allowed}
+.mini-ring{width:11px;height:11px;border-radius:50%;border:1.5px solid rgba(191,160,84,0.3);border-top-color:var(--gold);animation:spin 0.8s linear infinite;display:inline-block}
+.outfit-source-note{font-size:10px;color:var(--muted);letter-spacing:0.5px}
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width:820px){
+  .nav{padding:0 12px;gap:0}
+  .logo{font-size:15px;letter-spacing:3px;margin-right:12px}
+  .nav-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav-tabs::-webkit-scrollbar{display:none}
+  .ntab{padding:0 10px;font-size:9px;letter-spacing:1px}
+  .nav-right{gap:6px}
+  .api-status span{display:none}
+  .api-status{padding:4px 7px}
+  .nbtn{padding:6px 10px;font-size:9px;white-space:nowrap}
+  .pad{padding:16px 14px}
+  .analysis-hero{grid-template-columns:1fr;gap:14px}
+  .results-panel{max-height:none}
+  .profile-summary-grid{grid-template-columns:1fr}
+  .upload-grid{gap:8px}
+  .wgrid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+  .ogrid{grid-template-columns:1fr}
+  .chat-layout{grid-template-columns:1fr;height:auto}
+  .chat-main{height:60vh}
+  .chat-side{flex-direction:row;overflow-x:auto;gap:10px}
+  .chat-side .side-panel{flex-shrink:0;min-width:200px}
+  .tracker-stats{grid-template-columns:repeat(2,1fr)}
+  .frow{grid-template-columns:1fr}
+  .modal{padding:20px;width:100%}
+  .ritem{flex-wrap:wrap;gap:8px}
+  .rdate{width:auto}
+  .toast{left:14px;right:14px;bottom:14px;max-width:none}
+  .gen-outfits-row{flex-direction:column;align-items:stretch}
+}
 </style>
 </head>
 <body>
@@ -353,6 +397,10 @@ select.finput option{background:var(--ink2)}
 <div class="page pad" id="page-outfits">
   <div class="section-hd">Curated Outfit Combinations</div>
   <div class="section-sub">AI-matched to your body shape, skin tone, face shape & wardrobe</div>
+  <div class="gen-outfits-row">
+    <div class="outfit-source-note" id="outfit-source-note"></div>
+    <button class="gen-btn" id="gen-outfits-btn" onclick="generateAIOutfits()" style="display:none">✦ Generate AI Outfits From My Wardrobe</button>
+  </div>
   <div class="occ-row">
     <button class="occbtn active" onclick="filterO(this,'all')">All</button>
     <button class="occbtn" onclick="filterO(this,'casual')">Casual</button>
@@ -417,15 +465,15 @@ select.finput option{background:var(--ink2)}
 <!-- ════════════ TRACKER PAGE ════════════ -->
 <div class="page pad" id="page-tracker">
   <div class="section-hd">Outfit Tracker</div>
-  <div class="section-sub">April 2026 · Track every outfit you wear and plan what to wear next</div>
+  <div class="section-sub" id="tracker-sub">Track every outfit you wear and plan what to wear next</div>
   <div class="tracker-stats">
-    <div class="tstat"><div class="tstat-num" id="ts-worn">4</div><div class="tstat-lbl">Outfits Worn</div></div>
+    <div class="tstat"><div class="tstat-num" id="ts-worn">0</div><div class="tstat-lbl">Outfits Worn</div></div>
     <div class="tstat"><div class="tstat-num" id="ts-unworn">0</div><div class="tstat-lbl">Unworn Pieces</div></div>
     <div class="tstat"><div class="tstat-num" id="ts-combos">0</div><div class="tstat-lbl">Combinations</div></div>
     <div class="tstat"><div class="tstat-num" id="ts-repeat">0</div><div class="tstat-lbl">Repeats</div></div>
   </div>
   <div class="cal-wrap">
-    <div class="cal-month">April 2026</div>
+    <div class="cal-month" id="cal-month">—</div>
     <div class="cal-wd-row">
       <div class="cal-wd">Sun</div><div class="cal-wd">Mon</div><div class="cal-wd">Tue</div>
       <div class="cal-wd">Wed</div><div class="cal-wd">Thu</div><div class="cal-wd">Fri</div><div class="cal-wd">Sat</div>
@@ -439,7 +487,7 @@ select.finput option{background:var(--ink2)}
 <!-- ── ADD ITEM MODAL ── -->
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <div class="modal-title">Add to Wardrobe</div>
+    <div class="modal-title" id="modal-title">Add to Wardrobe</div>
     <div class="modal-upload-zone" onclick="document.getElementById('fi-item-modal').click()">
       <img id="modal-preview-img" class="modal-preview" style="display:none">
       <div id="modal-upload-prompt" style="display:flex;flex-direction:column;align-items:center;gap:6px">
@@ -466,7 +514,7 @@ select.finput option{background:var(--ink2)}
     <div class="fgroup"><label class="flabel">Brand (optional)</label><input class="finput" id="fi-brand" placeholder="e.g. Uniqlo, Zara"></div>
     <div class="mactions">
       <button class="mbtn cancel" onclick="closeModal()">Cancel</button>
-      <button class="mbtn confirm" onclick="confirmAddItem()">Add to Wardrobe</button>
+      <button class="mbtn confirm" id="modal-confirm-btn" onclick="confirmAddItem()">Add to Wardrobe</button>
     </div>
   </div>
 </div>
@@ -494,8 +542,37 @@ const S = {
   wardrobe: JSON.parse(localStorage.getItem('atelier_wardrobe') || '[]'),
   chatHistory: [],
   modalImg: null,
-  wornOutfits: new Set(),
+  editingId: null,
+  wornLog: JSON.parse(localStorage.getItem('atelier_wornlog') || '[]'),
+  aiOutfits: JSON.parse(localStorage.getItem('atelier_ai_outfits') || 'null'),
+  aiOutfitsKey: localStorage.getItem('atelier_ai_outfits_key') || null,
 };
+
+// ── IMAGE RESIZE (keeps localStorage small & API calls fast) ──
+function resizeImage(dataUrl, maxDim, quality) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      let { width, height } = img;
+      if (width > maxDim || height > maxDim) {
+        if (width > height) { height = Math.round(height * (maxDim / width)); width = maxDim; }
+        else { width = Math.round(width * (maxDim / height)); height = maxDim; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL('image/jpeg', quality || 0.85));
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
+}
+
+function wardrobeKey() {
+  // Cheap fingerprint of current wardrobe contents, used to know when cached AI outfits go stale
+  return S.wardrobe.map(i=>i.id).sort().join(',');
+}
 
 const DEMO_OUTFITS = [
   { name:'The Urban Professional', occ:'business', score:96, worn:false, tags:['Business','Earth Tones'], colors:['#4A6741','#C4956A','#2C3E2D'], desc:'Olive linen shirt · Cognac chinos · Forest Oxford shoes' },
@@ -508,13 +585,6 @@ const DEMO_OUTFITS = [
   { name:'Business Casual', occ:'business', score:88, worn:false, tags:['Business','Relaxed'], colors:['#2C3E2D','#F2EDE4','#8B7355'], desc:'Forest shirt · Cream trousers · Camel leather belt' },
   { name:'Festive Formal', occ:'ethnic', score:92, worn:false, tags:['Ethnic','Festive'], colors:['#1A3A2A','#BFA054','#F2EDE4'], desc:'Deep green sherwani · Gold dupatta · Cream churidar' },
   { name:'Casual Sunday', occ:'casual', score:85, worn:false, tags:['Casual','Comfort'], colors:['#F2EDE4','#8B7355','#2C3E2D'], desc:'Cream oversized tee · Sand shorts · Olive cap' },
-];
-
-const DEMO_RECENT = [
-  { date:'Apr 13, Sun', colors:['#1C1F26','#BFA054','#4A2912'], occ:'Date Night', score:'★★★★★' },
-  { date:'Apr 12, Sat', colors:['#8B7355','#F2EDE4','#C4956A'], occ:'Smart Casual', score:'★★★★☆' },
-  { date:'Apr 11, Fri', colors:['#4A6741','#C4956A','#2C3E2D'], occ:'Business', score:'★★★★★' },
-  { date:'Apr 10, Thu', colors:['#2C3E2D','#F2EDE4','#8B7355'], occ:'Casual', score:'★★★★☆' },
 ];
 
 // ── INIT ──
@@ -554,10 +624,11 @@ function nav(btn, id) {
 function handleSlot(input, slotId) {
   const file = input.files[0]; if(!file) return;
   const reader = new FileReader();
-  reader.onload = e => {
-    S.photos[slotId] = e.target.result;
+  reader.onload = async e => {
+    const resized = await resizeImage(e.target.result, 1024, 0.85);
+    S.photos[slotId] = resized;
     const slot = document.getElementById('slot-'+slotId);
-    slot.innerHTML = `<img class="slot-img" src="${e.target.result}"><div class="slot-overlay"><div class="slot-remove" onclick="removeSlot('${slotId}',event)">Remove</div></div>`;
+    slot.innerHTML = `<img class="slot-img" src="${resized}"><div class="slot-overlay"><div class="slot-remove" onclick="removeSlot('${slotId}',event)">Remove</div></div>`;
     slot.classList.add('filled');
     S.photoCount = Object.values(S.photos).filter(Boolean).length;
     document.getElementById('analyze-btn').disabled = false;
@@ -698,7 +769,10 @@ function updateSideProfile(p) {
 function handleWardrobeUpload(inp) {
   const file = inp.files[0]; if(!file) return;
   const reader = new FileReader();
-  reader.onload = async e => { await analyzeClothingItem(e.target.result, file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' ')); };
+  reader.onload = async e => {
+    const resized = await resizeImage(e.target.result, 700, 0.82);
+    await analyzeClothingItem(resized, file.name.replace(/\.[^.]+$/,'').replace(/[-_]/g,' '));
+  };
   reader.readAsDataURL(file);
   inp.value = '';
 }
@@ -751,7 +825,7 @@ function renderWardrobe(filter) {
     const div=document.createElement('div');
     div.className='wcard';
     div.title=item.matchReason||'';
-    div.innerHTML=`<div class="wcard-img" style="background:${item.colorHex||'#888'}22">${item.img?`<img src="${item.img}" alt="${item.name}">`:`<span style="font-size:32px">${item.emoji||'👔'}</span>`}${item.worn>0?`<div class="worn-pill">Worn ${item.worn}×</div>`:''}</div><div class="wcard-info"><div class="wcard-name">${item.name}</div><div class="wcard-meta">${item.color||''} · ${item.category}</div><div class="ai-match-bar"><div class="ai-match-fill" style="width:${score}%;background:${bc}"></div></div><div style="font-size:9px;color:var(--muted);margin-top:2px">AI Match: ${score}%</div></div>`;
+    div.innerHTML=`<div class="wcard-actions"><div class="wca-btn" title="Edit" onclick="editWardrobeItem(${item.id},event)">✎</div><div class="wca-btn" title="Delete" onclick="deleteWardrobeItem(${item.id},event)">✕</div></div><div class="wcard-img" style="background:${item.colorHex||'#888'}22">${item.img?`<img src="${item.img}" alt="${item.name}">`:`<span style="font-size:32px">${item.emoji||'👔'}</span>`}${item.worn>0?`<div class="worn-pill">Worn ${item.worn}×</div>`:''}</div><div class="wcard-info"><div class="wcard-name">${item.name}</div><div class="wcard-meta">${item.color||''} · ${item.category}</div><div class="ai-match-bar"><div class="ai-match-fill" style="width:${score}%;background:${bc}"></div></div><div style="font-size:9px;color:var(--muted);margin-top:2px">AI Match: ${score}%</div></div>`;
     grid.appendChild(div);
   });
   document.getElementById('wardrobe-sub').textContent = `${S.wardrobe.length} pieces · ${S.wardrobe.filter(i=>i.worn===0).length} unworn`;
@@ -761,6 +835,10 @@ function filterW(btn,f){ document.querySelectorAll('.wfbtn').forEach(b=>b.classL
 function saveWardrobe(){ try{ localStorage.setItem('atelier_wardrobe',JSON.stringify(S.wardrobe)); }catch(e){} }
 
 // ── OUTFITS ──
+let currentFilter='all';
+let currentOutfitSrc=[];
+
+// Naive fallback pairing — used only until AI outfits have been generated for this wardrobe
 function buildWardrobeOutfits() {
   const tops=S.wardrobe.filter(i=>i.category==='tops');
   const bots=S.wardrobe.filter(i=>i.category==='bottoms');
@@ -769,21 +847,117 @@ function buildWardrobeOutfits() {
   const combos=[];
   tops.forEach(t=>bots.forEach(b=>{
     const sh=shoes[Math.floor(Math.random()*shoes.length)];
-    combos.push({ name:`${t.name} + ${b.name}`, occ:(t.occasions&&t.occasions[0])||'casual', score:Math.round(((t.matchScore||70)+(b.matchScore||70))/2), worn:false, tags:[(t.occasions&&t.occasions[0])||'Casual'], colors:[t.colorHex||'#888',b.colorHex||'#888',sh?sh.colorHex||'#888':'#8B6043'], desc:`${t.name} · ${b.name}${sh?' · '+sh.name:''}` });
+    const itemIds=[t.id,b.id]; if(sh) itemIds.push(sh.id);
+    combos.push({ name:`${t.name} + ${b.name}`, occ:(t.occasions&&t.occasions[0])||'casual', score:Math.round(((t.matchScore||70)+(b.matchScore||70))/2), tags:[(t.occasions&&t.occasions[0])||'Casual'], colors:[t.colorHex||'#888',b.colorHex||'#888',sh?sh.colorHex||'#888':'#8B6043'], desc:`${t.name} · ${b.name}${sh?' · '+sh.name:''}`, itemIds });
   }));
   return combos.sort((a,b)=>b.score-a.score).slice(0,16);
 }
 
+// Real AI-reasoned outfits, generated once per wardrobe snapshot and cached
+async function generateAIOutfits() {
+  const btn=document.getElementById('gen-outfits-btn');
+  btn.disabled=true;
+  btn.innerHTML=`<span class="mini-ring"></span> Styling your wardrobe…`;
+  const items=S.wardrobe.map(i=>({id:i.id,name:i.name,category:i.category,color:i.color,colorHex:i.colorHex,occasions:i.occasions,matchScore:i.matchScore}));
+  const profileCtx=S.profile?`Client profile — Skin tone: ${S.profile.skinTone} (${S.profile.undertone} undertone), Face shape: ${S.profile.faceShape}, Body shape: ${S.profile.bodyProportions||S.profile.bodyShape}, Best colours: ${(S.profile.bestColors||[]).map(c=>c.name).join(', ')}, Best fits: ${(S.profile.bestFits||[]).join('; ')}.`:'No photo analysis on file — style generically for the pieces given.';
+  const prompt=`You are a luxury fashion stylist building real outfit combinations from a client's ACTUAL wardrobe (not generic advice).\n\n${profileCtx}\n\nWARDROBE ITEMS (JSON): ${JSON.stringify(items)}\n\nCreate up to 10 genuinely well-considered outfit combinations. Each outfit MUST combine 2-4 real items from the wardrobe above by their exact "id" values — do not invent items. Prioritise combinations that make real colour-theory and occasion sense, and that flatter the client's profile where relevant. Only combine items that could plausibly be worn together for one occasion (don't mix ethnic wear with business separates, etc). If the wardrobe genuinely doesn't support a full outfit (e.g. no bottoms at all), return fewer, honest combinations rather than padding.\n\nReturn ONLY valid JSON, no markdown fences, no explanation:\n[{"name":"short evocative outfit name","occ":"casual|business|formal|evening|date|ethnic","itemIds":[id,id],"score":0-100,"tags":["tag1","tag2"],"desc":"1 sentence on the combo and why it works for this client"}]`;
+
+  try {
+    const data=await callClaude({ model:'claude-sonnet-4-20250514', max_tokens:2000, messages:[{role:'user',content:prompt}] });
+    let raw=data.content.map(b=>b.text||'').join('');
+    const jsonMatch=raw.match(/\[[\s\S]*\]/);
+    if(!jsonMatch) throw new Error('No JSON array found in response');
+    const parsed=JSON.parse(jsonMatch[0]);
+    const byId={}; S.wardrobe.forEach(i=>byId[i.id]=i);
+    const outfits=parsed.map(o=>{
+      const realItems=(o.itemIds||[]).map(id=>byId[id]).filter(Boolean);
+      if(!realItems.length) return null;
+      return {
+        name:o.name||realItems.map(i=>i.name).join(' + '),
+        occ:o.occ||'casual',
+        score:typeof o.score==='number'?o.score:85,
+        tags:o.tags&&o.tags.length?o.tags:[o.occ||'Casual'],
+        desc:o.desc||realItems.map(i=>i.name).join(' · '),
+        colors:realItems.map(i=>i.colorHex||'#888'),
+        itemIds:realItems.map(i=>i.id),
+      };
+    }).filter(Boolean);
+    if(!outfits.length) throw new Error('AI returned no valid combinations from your wardrobe');
+    S.aiOutfits=outfits;
+    S.aiOutfitsKey=wardrobeKey();
+    localStorage.setItem('atelier_ai_outfits',JSON.stringify(outfits));
+    localStorage.setItem('atelier_ai_outfits_key',S.aiOutfitsKey);
+    renderOutfits(currentFilter);
+    showToast(`Generated ${outfits.length} outfit${outfits.length===1?'':'s'} from your wardrobe`);
+  } catch(err) {
+    showToast(`Couldn't generate outfits: ${err.message}`);
+  }
+  btn.disabled=false;
+  btn.innerHTML='✦ Regenerate AI Outfits';
+}
+
+function getOutfitSource() {
+  if(S.aiOutfits && S.aiOutfitsKey===wardrobeKey() && S.wardrobe.length) return { list:S.aiOutfits, mode:'ai' };
+  if(S.wardrobe.length>=2) { const built=buildWardrobeOutfits(); if(built) return { list:built, mode:'naive' }; }
+  return { list:DEMO_OUTFITS, mode:'demo' };
+}
+
+function isWornToday(name){ const t=todayISO(); return S.wornLog.some(l=>l.name===name && l.date===t); }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+
 function renderOutfits(filter) {
+  currentFilter=filter;
   const grid=document.getElementById('outfit-grid');
-  const src=(S.wardrobe.length>=4&&buildWardrobeOutfits())||DEMO_OUTFITS;
+  const genBtn=document.getElementById('gen-outfits-btn');
+  const note=document.getElementById('outfit-source-note');
+  const { list:src, mode } = getOutfitSource();
+  currentOutfitSrc=src;
+
+  if(mode==='demo'){
+    genBtn.style.display='none';
+    note.textContent='Showing style-inspiration examples · add 2+ tops & bottoms to your wardrobe to generate outfits from your own clothes';
+  } else {
+    genBtn.style.display='flex';
+    genBtn.disabled=false;
+    genBtn.innerHTML = mode==='ai' ? '✦ Regenerate AI Outfits' : '✦ Generate AI Outfits From My Wardrobe';
+    note.textContent = mode==='ai' ? `${src.length} outfit${src.length===1?'':'s'} styled by Claude from your wardrobe` : 'Showing basic pairings · tap Generate for real AI-styled combinations';
+  }
+
   const all=filter==='all'?src:src.filter(o=>o.occ===filter);
   if(!all.length){ grid.innerHTML=`<div style="font-size:13px;color:var(--muted);padding:20px">No outfits for this occasion. Add more wardrobe items or select a different filter.</div>`; return; }
-  grid.innerHTML=all.map((o,i)=>`<div class="ocard ${S.wornOutfits.has(i)?'worn':''}" id="ocard-${i}"><div class="ocard-colors">${o.colors.map(c=>`<div class="color-bar" style="background:${c}"></div>`).join('')}</div><div class="ocard-body"><div class="ocard-name">${o.name}</div><div class="ocard-desc">${o.desc||''}</div><div class="ocard-tags">${o.tags.map(t=>`<span class="otag otag-gold">${t}</span>`).join('')}${S.wornOutfits.has(i)?'<span class="otag otag-rose">Worn</span>':''}</div><div class="match-row"><div class="match-label">AI Match</div><div class="match-pct">${o.score}%</div></div><div class="ocard-btns"><button class="ocbtn" onclick="toggleWorn(${i})">${S.wornOutfits.has(i)?'Unmark':'Mark Worn'}</button><button class="ocbtn primary" onclick="qsend('Tell me more about this outfit: ${o.name} — ${o.desc||o.tags.join(', ')}')">Ask AI ↗</button></div></div></div>`).join('');
+  grid.innerHTML=all.map((o)=>{
+    const worn=isWornToday(o.name);
+    const safeName=o.name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const askText=`Tell me more about this outfit: ${o.name} — ${o.desc||o.tags.join(', ')}`.replace(/'/g,"\\'");
+    return `<div class="ocard ${worn?'worn':''}"><div class="ocard-colors">${o.colors.map(c=>`<div class="color-bar" style="background:${c}"></div>`).join('')}</div><div class="ocard-body"><div class="ocard-name">${o.name}</div><div class="ocard-desc">${o.desc||''}</div><div class="ocard-tags">${o.tags.map(t=>`<span class="otag otag-gold">${t}</span>`).join('')}${worn?'<span class="otag otag-rose">Worn Today</span>':''}</div><div class="match-row"><div class="match-label">AI Match</div><div class="match-pct">${o.score}%</div></div><div class="ocard-btns"><button class="ocbtn" onclick="toggleWorn('${safeName}')">${worn?'Unmark':'Mark Worn'}</button><button class="ocbtn primary" onclick="qsend('${askText}')">Ask AI ↗</button></div></div></div>`;
+  }).join('');
 }
 
 function filterO(btn,f){ document.querySelectorAll('.occbtn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderOutfits(f); }
-function toggleWorn(idx){ if(S.wornOutfits.has(idx)) S.wornOutfits.delete(idx); else S.wornOutfits.add(idx); renderOutfits(document.querySelector('.occbtn.active').textContent.toLowerCase()==='all'?'all':document.querySelector('.occbtn.active').textContent.toLowerCase()); document.getElementById('ts-worn').textContent=4+S.wornOutfits.size; updateStats(); }
+
+function toggleWorn(name){
+  const o=currentOutfitSrc.find(x=>x.name===name); if(!o) return;
+  const t=todayISO();
+  if(isWornToday(name)){
+    // remove today's log entry for this outfit and roll back item worn counts
+    const idx=S.wornLog.findIndex(l=>l.name===name && l.date===t);
+    if(idx>-1){
+      const entry=S.wornLog[idx];
+      (entry.itemIds||[]).forEach(id=>{ const item=S.wardrobe.find(i=>i.id===id); if(item && item.worn>0) item.worn--; });
+      S.wornLog.splice(idx,1);
+    }
+  } else {
+    S.wornLog.unshift({ date:t, ts:Date.now(), name:o.name, colors:o.colors, occ:o.occ, score:o.score, itemIds:o.itemIds||[] });
+    (o.itemIds||[]).forEach(id=>{ const item=S.wardrobe.find(i=>i.id===id); if(item) item.worn=(item.worn||0)+1; });
+  }
+  saveWardrobe();
+  saveWornLog();
+  renderOutfits(currentFilter);
+  updateStats();
+  if(document.getElementById('page-tracker').classList.contains('active')) renderTracker();
+}
+
+function saveWornLog(){ try{ localStorage.setItem('atelier_wornlog',JSON.stringify(S.wornLog)); }catch(e){} }
 
 // ── AI CHAT ──
 async function sendChat() {
@@ -838,35 +1012,102 @@ function qsend(msg){
 }
 
 // ── TRACKER ──
+const MONTH_NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
 function renderTracker(){
   updateStats();
+  const now=new Date();
+  const year=now.getFullYear(), month=now.getMonth(), todayDate=now.getDate();
+  document.getElementById('cal-month').textContent=`${MONTH_NAMES[month]} ${year}`;
+  const monthEntries=S.wornLog.filter(l=>{ const d=new Date(l.date+'T00:00:00'); return d.getFullYear()===year && d.getMonth()===month; });
+  const wornDaySet=new Set(monthEntries.map(l=>new Date(l.date+'T00:00:00').getDate()));
+
+  const firstDow=new Date(year,month,1).getDay();
+  const daysInMonth=new Date(year,month+1,0).getDate();
   const grid=document.getElementById('cal-grid');
-  const wornDays=[1,3,5,7,8,10,12,13];
   let html='';
-  for(let d=1;d<=30;d++){ const has=wornDays.includes(d); html+=`<div class="cday ${has?'has':''} ${d===13?'today':''}">${d}${has?'<div class="cday-dot"></div>':''}</div>`; }
+  for(let i=0;i<firstDow;i++) html+=`<div class="cday" style="visibility:hidden"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const has=wornDaySet.has(d);
+    const isToday=d===todayDate;
+    html+=`<div class="cday ${has?'has':''} ${isToday?'today':''}">${d}${has?'<div class="cday-dot"></div>':''}</div>`;
+  }
   grid.innerHTML=html;
-  document.getElementById('recent-list').innerHTML=DEMO_RECENT.map(r=>`<div class="ritem"><div class="rdate">${r.date}</div><div class="rcolors">${r.colors.map(c=>`<div class="rcol" style="background:${c}"></div>`).join('')}</div><div class="rocc">${r.occ}</div><div class="rscore">${r.score}</div></div>`).join('');
+
+  const recent=S.wornLog.slice().sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,8);
+  const recentList=document.getElementById('recent-list');
+  if(!recent.length){
+    recentList.innerHTML=`<div style="font-size:12px;color:var(--muted);padding:16px 4px">No outfits logged yet. Mark an outfit "Worn" on the Outfits page and it'll show up here.</div>`;
+  } else {
+    recentList.innerHTML=recent.map(r=>{
+      const d=new Date(r.date+'T00:00:00');
+      const label=`${MONTH_NAMES[d.getMonth()].slice(0,3)} ${d.getDate()}, ${d.toLocaleDateString('en-US',{weekday:'short'})}`;
+      return `<div class="ritem"><div class="rdate">${label}</div><div class="rcolors">${(r.colors||[]).map(c=>`<div class="rcol" style="background:${c}"></div>`).join('')}</div><div class="rocc">${r.name}</div><div class="rscore">${r.score}%</div></div>`;
+    }).join('');
+  }
+  document.getElementById('tracker-sub').textContent=`${MONTH_NAMES[month]} ${year} · Track every outfit you wear and plan what to wear next`;
 }
 
 function updateStats(){
   const total=S.wardrobe.length;
-  const unworn=S.wardrobe.filter(i=>i.worn===0).length;
-  const combos=total>=2?S.wardrobe.filter(i=>i.category==='tops').length*S.wardrobe.filter(i=>i.category==='bottoms').length:0;
+  const unworn=S.wardrobe.filter(i=>(i.worn||0)===0).length;
+  const { list:src } = getOutfitSource();
+  const combos=src.length;
   const avg=total?Math.round(S.wardrobe.reduce((a,i)=>a+(i.matchScore||70),0)/total):0;
+  const wornTotal=S.wornLog.length;
+  const distinctNames=new Set(S.wornLog.map(l=>l.name)).size;
+  const repeats=Math.max(0,wornTotal-distinctNames);
+
   document.getElementById('st-total').textContent=total;
   document.getElementById('st-combos').textContent=combos;
   document.getElementById('st-unworn').textContent=unworn;
   document.getElementById('st-avg').textContent=avg?avg+'%':'—';
   document.getElementById('ts-unworn').textContent=unworn;
   document.getElementById('ts-combos').textContent=combos;
-  document.getElementById('ts-worn').textContent=4+S.wornOutfits.size;
+  document.getElementById('ts-worn').textContent=wornTotal;
+  const repeatEl=document.getElementById('ts-repeat'); if(repeatEl) repeatEl.textContent=repeats;
 }
 
 // ── MODAL ──
-function openModal(){ document.getElementById('modal-bg').classList.add('open'); }
+function openModal(){
+  S.editingId=null;
+  document.getElementById('modal-title').textContent='Add to Wardrobe';
+  document.getElementById('modal-confirm-btn').textContent='Add to Wardrobe';
+  document.getElementById('modal-bg').classList.add('open');
+}
+function editWardrobeItem(id,e){
+  if(e) e.stopPropagation();
+  const item=S.wardrobe.find(i=>i.id===id); if(!item) return;
+  S.editingId=id;
+  document.getElementById('modal-title').textContent='Edit Item';
+  document.getElementById('modal-confirm-btn').textContent='Save Changes';
+  document.getElementById('fi-name').value=item.name||'';
+  document.getElementById('fi-cat').value=item.category||'tops';
+  document.getElementById('fi-color').value=item.color||'';
+  document.getElementById('fi-occ').value=(item.occasions||[]).join(', ');
+  document.getElementById('fi-brand').value=item.brand||'';
+  S.modalImg=item.img||null;
+  if(item.img){
+    document.getElementById('modal-preview-img').src=item.img;
+    document.getElementById('modal-preview-img').style.display='block';
+    document.getElementById('modal-upload-prompt').style.display='none';
+  }
+  document.getElementById('modal-bg').classList.add('open');
+}
+function deleteWardrobeItem(id,e){
+  if(e) e.stopPropagation();
+  const item=S.wardrobe.find(i=>i.id===id); if(!item) return;
+  if(!confirm(`Remove "${item.name}" from your wardrobe?`)) return;
+  S.wardrobe=S.wardrobe.filter(i=>i.id!==id);
+  saveWardrobe();
+  renderWardrobe(document.querySelector('.wfbtn.active')?.textContent.toLowerCase()==='all'?'all':'all');
+  updateStats();
+  showToast(`"${item.name}" removed from wardrobe`);
+}
 function closeModal(){
   document.getElementById('modal-bg').classList.remove('open');
   S.modalImg=null;
+  S.editingId=null;
   document.getElementById('modal-preview-img').style.display='none';
   document.getElementById('modal-upload-prompt').style.display='flex';
   ['fi-name','fi-color','fi-occ','fi-brand'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
@@ -874,7 +1115,13 @@ function closeModal(){
 function handleModalImg(inp){
   const file=inp.files[0]; if(!file) return;
   const reader=new FileReader();
-  reader.onload=e=>{ S.modalImg=e.target.result; document.getElementById('modal-preview-img').src=e.target.result; document.getElementById('modal-preview-img').style.display='block'; document.getElementById('modal-upload-prompt').style.display='none'; };
+  reader.onload=async e=>{
+    const resized = await resizeImage(e.target.result, 700, 0.82);
+    S.modalImg=resized;
+    document.getElementById('modal-preview-img').src=resized;
+    document.getElementById('modal-preview-img').style.display='block';
+    document.getElementById('modal-upload-prompt').style.display='none';
+  };
   reader.readAsDataURL(file); inp.value='';
 }
 async function confirmAddItem(){
@@ -882,9 +1129,28 @@ async function confirmAddItem(){
   const cat=document.getElementById('fi-cat').value;
   const color=document.getElementById('fi-color').value.trim();
   const occ=document.getElementById('fi-occ').value.trim();
+  const brand=document.getElementById('fi-brand').value.trim();
   const img=S.modalImg;
+  const editingId=S.editingId;
+
+  if(editingId){
+    const item=S.wardrobe.find(i=>i.id===editingId);
+    if(item){
+      Object.assign(item,{
+        name, category:cat, color:color||item.color, brand:brand||undefined,
+        occasions: occ?occ.split(',').map(o=>o.trim().toLowerCase()):item.occasions,
+        img: img||item.img,
+      });
+      saveWardrobe();
+      renderWardrobe('all');
+      updateStats();
+      showToast(`"${name}" updated`);
+    }
+    closeModal();
+    return;
+  }
   closeModal();
-  await analyzeClothingItem(img,name,{name,cat,color:color||undefined,occasions:occ?occ.split(',').map(o=>o.trim().toLowerCase()):['casual']});
+  await analyzeClothingItem(img,name,{name,cat,color:color||undefined,brand:brand||undefined,occasions:occ?occ.split(',').map(o=>o.trim().toLowerCase()):['casual']});
 }
 
 // ── TOAST ──
