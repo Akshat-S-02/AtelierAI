@@ -99,7 +99,7 @@ html,body{background:var(--ink);color:var(--cream);font-family:'Outfit',sans-ser
 .scan-step.done .step-dot{background:var(--sage)}
 
 /* ── PROFILE SUMMARY ── */
-.profile-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.profile-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
 .pscard{background:var(--ink2);border:0.5px solid #2A2620;border-radius:var(--r3);padding:18px}
 .psc-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .psc-item{font-size:12px;color:var(--cream2);margin-bottom:9px;padding-left:12px;border-left:1.5px solid var(--gold);line-height:1.5}
@@ -323,7 +323,7 @@ select.finput option{background:var(--ink2)}
   <div class="analysis-hero">
     <div class="upload-panel">
       <div class="panel-title">Upload Your Photos</div>
-      <div class="panel-sub">Upload 2–4 photos from different angles. AI will analyse your body shape, face shape, skin tone, and undertone to generate your complete personal style profile.</div>
+      <div class="panel-sub">Upload 2–4 photos from different angles. AI will analyse your body shape, face shape, skin tone, and undertone — and recommend a haircut, beard & moustache style to match — to generate your complete personal style profile.</div>
       <div class="upload-grid">
         <div class="upload-slot" id="slot-front" onclick="document.getElementById('fi-front').click()">
           <div class="slot-icon">🧍</div><div class="slot-label">Front View</div>
@@ -424,6 +424,7 @@ select.finput option{background:var(--ink2)}
         <button class="qp" onclick="qsend('Suggest a complete outfit for a formal dinner tonight')">Formal dinner outfit</button>
         <button class="qp" onclick="qsend('What patterns and fabrics work best for my profile?')">Best patterns for me</button>
         <button class="qp" onclick="qsend('Which items in my wardrobe are most versatile and why?')">Most versatile pieces</button>
+        <button class="qp" onclick="qsend('Based on my face shape and the overall style of my wardrobe, what haircut, beard, and moustache would suit me best?')">Best haircut & beard for me</button>
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="cmsg">
@@ -679,8 +680,12 @@ async function runAnalysis() {
     const mt = b64.split(';')[0].split(':')[1] || 'image/jpeg';
     content.push({ type:'image', source:{ type:'base64', media_type:mt, data:b64.split(',')[1] } });
   });
-  content.push({ type:'text', text:`You are a world-class fashion stylist, colour analyst, and body shape expert. Carefully analyse ALL provided photos. Return ONLY a valid JSON object, no markdown fences, no explanation:
-{"skinTone":"descriptive name","undertone":"Warm or Cool or Neutral","faceShape":"Oval or Round or Square or Heart or Diamond or Oblong or Rectangle","bodyShape":"Hourglass or Pear or Apple or Rectangle or Inverted Triangle","facialFeatures":"2 sentence description","bodyProportions":"2 sentence description","skinHex":"#hex","bestColors":[{"name":"name","hex":"#hex","reason":"specific reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"avoidColors":[{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"bodyStyleTips":["tip1","tip2","tip3","tip4"],"faceStyleTips":["tip1","tip2","tip3"],"bestFits":["fit1","fit2","fit3","fit4"],"patternsTextures":"description","necklines":"description","seasonalPalette":"Spring or Summer or Autumn or Winter","confidence":0}` });
+  const wardrobeSummary = S.wardrobe.length
+    ? `The client's current wardrobe (for style-aesthetic context only): ${S.wardrobe.map(i=>`${i.name} (${i.color||'—'}, ${i.category})`).join('; ')}.`
+    : `No wardrobe items on file yet — infer their style aesthetic from any clothing visible in the uploaded photos themselves.`;
+
+  content.push({ type:'text', text:`You are a world-class fashion stylist, colour analyst, body shape expert, and men's grooming consultant. Carefully analyse ALL provided photos — including hair texture/density, face shape, jawline, and any clothing visible in the photos. ${wardrobeSummary} Return ONLY a valid JSON object, no markdown fences, no explanation:
+{"skinTone":"descriptive name","undertone":"Warm or Cool or Neutral","faceShape":"Oval or Round or Square or Heart or Diamond or Oblong or Rectangle","bodyShape":"Hourglass or Pear or Apple or Rectangle or Inverted Triangle","facialFeatures":"2 sentence description","bodyProportions":"2 sentence description","skinHex":"#hex","bestColors":[{"name":"name","hex":"#hex","reason":"specific reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"avoidColors":[{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"},{"name":"name","hex":"#hex","reason":"reason"}],"bodyStyleTips":["tip1","tip2","tip3","tip4"],"faceStyleTips":["tip1","tip2","tip3"],"bestFits":["fit1","fit2","fit3","fit4"],"patternsTextures":"description","necklines":"description","seasonalPalette":"Spring or Summer or Autumn or Winter","grooming":{"haircut":"specific recommended haircut/hairstyle name","haircutReason":"1-2 sentences tying it to face shape, hair texture, and their clothing style","beard":"specific recommended beard style name, or 'Clean shaven' if that suits them better","beardReason":"1-2 sentences tying it to jawline/face shape and overall look","moustache":"specific recommendation — a standalone moustache style, 'Pair with the beard style above', or 'Not recommended' with why","moustacheReason":"1 sentence reason","groomingTips":["tip1","tip2","tip3"]},"confidence":0}` });
 
   try {
     const data = await callClaude({ model:'claude-sonnet-5', max_tokens:1800, messages:[{role:'user',content}] });
@@ -727,6 +732,17 @@ function showProfileResults(p) {
       <div class="rs-desc">${p.facialFeatures}</div>
     </div>
     <div class="result-section">
+      <div class="rs-label">Hair, Beard & Moustache</div>
+      ${p.grooming ? `
+      <div class="rs-value" style="margin-bottom:2px">${p.grooming.haircut||'—'}</div>
+      <div class="rs-desc" style="margin-bottom:10px">${p.grooming.haircutReason||''}</div>
+      <div class="rs-value" style="margin-bottom:2px">${p.grooming.beard||'—'}</div>
+      <div class="rs-desc" style="margin-bottom:10px">${p.grooming.beardReason||''}</div>
+      <div class="rs-value" style="margin-bottom:2px">${p.grooming.moustache||'—'}</div>
+      <div class="rs-desc">${p.grooming.moustacheReason||''}</div>
+      ` : `<div class="rs-desc">Re-run analysis to get haircut, beard & moustache recommendations.</div>`}
+    </div>
+    <div class="result-section">
       <div class="rs-label">Body Shape</div>
       <div class="rs-value">${p.bodyShape}</div>
       <div class="rs-desc">${p.bodyProportions}</div>
@@ -755,7 +771,8 @@ function showProfileResults(p) {
     {label:'Best Fits & Silhouettes',items:p.bestFits},
     {label:'Body Shape Style Tips',items:p.bodyStyleTips},
     {label:'Face Shape Tips',items:p.faceStyleTips},
-  ].map(c=>`<div class="pscard"><div class="psc-label">${c.label}</div>${(c.items||[]).map(i=>`<div class="psc-item">${i}</div>`).join('')}</div>`).join('');
+    {label:'Grooming Recommendations',items:(p.grooming&&p.grooming.groomingTips)||[]},
+  ].map(c=>`<div class="pscard"><div class="psc-label">${c.label}</div>${(c.items||[]).map(i=>`<div class="psc-item">${i}</div>`).join('')||'<div class="psc-item" style="border-color:var(--muted);color:var(--muted)">Re-run analysis for grooming tips</div>'}</div>`).join('');
   document.getElementById('profile-summary').style.display = 'block';
   document.getElementById('analyze-btn').disabled = false;
 }
@@ -981,7 +998,7 @@ async function sendChat() {
   container.appendChild(el);
   container.scrollTop=container.scrollHeight;
 
-  const profileCtx=S.profile?`\nANALYSED PROFILE:\n- Skin Tone: ${S.profile.skinTone} | Undertone: ${S.profile.undertone} | Season: ${S.profile.seasonalPalette||'unknown'}\n- Face Shape: ${S.profile.faceShape} | Body Shape: ${S.profile.bodyShape}\n- Best Colours: ${(S.profile.bestColors||[]).map(c=>c.name).join(', ')}\n- Avoid: ${(S.profile.avoidColors||[]).map(c=>c.name).join(', ')}\n- Best Fits: ${(S.profile.bestFits||[]).join('; ')}\n- Necklines: ${S.profile.necklines||'—'}\n- Patterns: ${S.profile.patternsTextures||'—'}`:'No photo analysis completed yet.';
+  const profileCtx=S.profile?`\nANALYSED PROFILE:\n- Skin Tone: ${S.profile.skinTone} | Undertone: ${S.profile.undertone} | Season: ${S.profile.seasonalPalette||'unknown'}\n- Face Shape: ${S.profile.faceShape} | Body Shape: ${S.profile.bodyShape}\n- Best Colours: ${(S.profile.bestColors||[]).map(c=>c.name).join(', ')}\n- Avoid: ${(S.profile.avoidColors||[]).map(c=>c.name).join(', ')}\n- Best Fits: ${(S.profile.bestFits||[]).join('; ')}\n- Necklines: ${S.profile.necklines||'—'}\n- Patterns: ${S.profile.patternsTextures||'—'}${S.profile.grooming?`\n- Recommended Haircut: ${S.profile.grooming.haircut||'—'} (${S.profile.grooming.haircutReason||''})\n- Recommended Beard: ${S.profile.grooming.beard||'—'} (${S.profile.grooming.beardReason||''})\n- Recommended Moustache: ${S.profile.grooming.moustache||'—'} (${S.profile.grooming.moustacheReason||''})`:''}`:'No photo analysis completed yet.';
   const wardrobeCtx=S.wardrobe.length?`\nWARDROBE (${S.wardrobe.length} items): ${S.wardrobe.map(i=>`${i.name}(${i.color},${i.category},${i.matchScore}%)`).join(' | ')}`:'No wardrobe items yet.';
   const system=`You are a luxury fashion consultant at Atelier AI. Deep expertise in colour theory, body proportion styling, face shape dressing, and fashion trends.${profileCtx}${wardrobeCtx}\n\nAlways reference the user's specific profile. Be warm, authoritative, specific. Give actionable recommendations. 2-4 paragraphs max.`;
 
