@@ -1025,21 +1025,28 @@ function personPhotoForTryOn(){
   return S.photos.front || S.photos.full || (S.profile && S.profile._sourcePhoto) || null;
 }
 
-function findTryonApparelImg(o){
-  // Try-on works with one garment per call — use the first outfit item that actually has a real photo.
-  // Prioritise tops since they dominate the visual result.
-  if(!o.itemIds || !o.itemIds.length) return null;
+function findTryonItems(o){
+  // Try-on takes one garment per API call, so a full outfit means chaining calls —
+  // each result becomes the "person" input for the next piece. Order roughly follows
+  // how you'd actually get dressed, so later layers sit naturally over earlier ones.
+  if(!o.itemIds || !o.itemIds.length) return [];
   const items = o.itemIds.map(id=>S.wardrobe.find(i=>i.id===id)).filter(Boolean);
-  const top = items.find(i=>i.category==='tops' && i.img);
-  if(top) return top.img;
-  const anyWithImg = items.find(i=>i.img);
-  return anyWithImg ? anyWithImg.img : null;
+  const order = ['bottoms','tops','outerwear','shoes','accessories'];
+  return order
+    .map(cat => items.find(i=>i.category===cat && i.img))
+    .filter(Boolean)
+    .map(i => ({ img:i.img, label:i.name, category:i.category }));
+}
+
+function findTryonApparelImg(o){
+  const items = findTryonItems(o);
+  return items.length ? items[0].img : null;
 }
 
 async function tryOnOutfit(name){
   const o=currentOutfitSrc.find(x=>x.name===name); if(!o) return;
   const personImage=personPhotoForTryOn();
-  const apparelImage=findTryonApparelImg(o);
+  const items=findTryonItems(o);
   const modalBg=document.getElementById('tryon-modal-bg');
   const body=document.getElementById('tryon-modal-body');
   document.getElementById('tryon-modal-title').textContent=`Virtual Try-On · ${o.name}`;
@@ -1048,22 +1055,37 @@ async function tryOnOutfit(name){
     showToast('Upload a front-view or full-body photo on the Analysis page first.');
     return;
   }
-  if(!apparelImage){
-    showToast("This outfit doesn't have a wardrobe item with a photo to try on.");
+  if(!items.length){
+    showToast("This outfit doesn't have any wardrobe items with a photo to try on.");
     return;
   }
 
-  body.innerHTML=`<div class="analyzing-state" style="padding:20px"><div class="scan-ring"></div><div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-align:center">Generating your try-on preview…</div></div>`;
   modalBg.classList.add('open');
+  let current=personImage;
+  const failed=[];
+  const succeeded=[];
 
-  try {
-    const res=await fetch('/api/tryon',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ personImage, apparelImage }) });
-    const data=await res.json();
-    if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
-    body.innerHTML=`<img class="tryon-img" src="${data.image}"><div class="tryon-note">Preview shows the key piece of this outfit (${o.name}) — free demo mode, results may vary and are rate-limited.</div>`;
-  } catch(err){
-    body.innerHTML=`<div class="tryon-error">Try-on failed: ${err.message}<br><br>This uses api4.ai's free rate-limited demo — if you're being throttled, wait a moment and try again.</div>`;
+  for(let i=0;i<items.length;i++){
+    const step=items[i];
+    body.innerHTML=`<div class="analyzing-state" style="padding:20px"><div class="scan-ring"></div><div style="font-size:12px;color:var(--muted);letter-spacing:1px;text-align:center">Adding ${step.label} (${i+1}/${items.length})…</div></div>`;
+    try {
+      const res=await fetch('/api/tryon',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ personImage:current, apparelImage:step.img }) });
+      const data=await res.json();
+      if(data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+      current=data.image;
+      succeeded.push(step.label);
+    } catch(err){
+      failed.push(`${step.label} (${err.message})`);
+    }
   }
+
+  if(!succeeded.length){
+    body.innerHTML=`<div class="tryon-error">Try-on failed for every piece in this outfit:<br>${failed.join('<br>')}<br><br>If you're on the free demo, this is usually rate-limiting — wait a moment and try again.</div>`;
+    return;
+  }
+
+  const failedNote = failed.length ? `<div class="tryon-error" style="padding-bottom:10px">Couldn't add: ${failed.join('; ')}</div>` : '';
+  body.innerHTML=`<img class="tryon-img" src="${current}">${failedNote}<div class="tryon-note">Full outfit preview · layered ${succeeded.length} of ${items.length} piece(s): ${succeeded.join(' → ')}. Each piece is a separate try-on call, so results may drift slightly from step to step.</div>`;
 }
 
 function closeTryonModal(){ document.getElementById('tryon-modal-bg').classList.remove('open'); }
