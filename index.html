@@ -557,7 +557,7 @@ async function callClaude(body) {
 
 // ── STATE ──
 const S = {
-  photos: { front:null, side:null, face:null, full:null },
+  photos: JSON.parse(localStorage.getItem('atelier_photos') || '{"front":null,"side":null,"face":null,"full":null}'),
   photoCount: 0,
   profile: JSON.parse(localStorage.getItem('atelier_profile') || 'null'),
   wardrobe: JSON.parse(localStorage.getItem('atelier_wardrobe') || '[]'),
@@ -568,6 +568,8 @@ const S = {
   aiOutfits: JSON.parse(localStorage.getItem('atelier_ai_outfits') || 'null'),
   aiOutfitsKey: localStorage.getItem('atelier_ai_outfits_key') || null,
 };
+
+function savePhotos(){ try{ localStorage.setItem('atelier_photos', JSON.stringify(S.photos)); }catch(e){} }
 
 // ── IMAGE RESIZE (keeps localStorage small & API calls fast) ──
 function resizeImage(dataUrl, maxDim, quality) {
@@ -611,6 +613,7 @@ const DEMO_OUTFITS = [
 // ── INIT ──
 function init() {
   checkApiStatus();
+  restorePhotoSlots();
   if(S.profile) { showProfileResults(S.profile); updateSideProfile(S.profile); }
   renderWardrobe('all');
   renderOutfits('all');
@@ -653,6 +656,7 @@ function handleSlot(input, slotId) {
   reader.onload = async e => {
     const resized = await resizeImage(e.target.result, 1024, 0.85);
     S.photos[slotId] = resized;
+    savePhotos();
     const slot = document.getElementById('slot-'+slotId);
     slot.innerHTML = `<img class="slot-img" src="${resized}"><div class="slot-overlay"><div class="slot-remove" onclick="removeSlot('${slotId}',event)">Remove</div></div>`;
     slot.classList.add('filled');
@@ -666,6 +670,7 @@ function handleSlot(input, slotId) {
 function removeSlot(id, e) {
   e.stopPropagation();
   S.photos[id] = null;
+  savePhotos();
   const icons={front:'🧍',side:'🚶',face:'🙂',full:'📸'};
   const labels={front:'Front View',side:'Side View',face:'Face Close-Up',full:'Full Body'};
   const slot = document.getElementById('slot-'+id);
@@ -674,6 +679,18 @@ function removeSlot(id, e) {
   slot.onclick = () => document.getElementById('fi-'+id).click();
   S.photoCount = Object.values(S.photos).filter(Boolean).length;
   if(!S.photoCount) document.getElementById('analyze-btn').disabled = true;
+}
+
+function restorePhotoSlots(){
+  Object.keys(S.photos).forEach(id=>{
+    if(!S.photos[id]) return;
+    const slot=document.getElementById('slot-'+id);
+    if(!slot) return;
+    slot.innerHTML = `<img class="slot-img" src="${S.photos[id]}"><div class="slot-overlay"><div class="slot-remove" onclick="removeSlot('${id}',event)">Remove</div></div>`;
+    slot.classList.add('filled');
+  });
+  S.photoCount = Object.values(S.photos).filter(Boolean).length;
+  if(S.photoCount) document.getElementById('analyze-btn').disabled = false;
 }
 
 // ── ANALYSIS ──
